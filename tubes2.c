@@ -281,15 +281,5 @@ int main() {
         LihatJadwal();
     } 
 
-    /* Bebaskan memori di akhir program */
-    Dokter *saat_ini_free = head_dokter;
-    Dokter *berikutnya_free;
-    while (saat_ini_free != NULL) {
-        berikutnya_free = saat_ini_free->berikutnya;
-        free(saat_ini_free);
-        saat_ini_free = berikutnya_free;
-    }
-    head_dokter = NULL; 
-    
     return 0;
 }
