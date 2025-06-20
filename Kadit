@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "informasi.h"
 
 #define MAX_DOKTER 100
 #define MAX_HARI 30
@@ -109,6 +110,29 @@ void tampilkan_jadwal_harian(Dokter dokter[], int jumlah_dokter, Hari jadwal[], 
     }
 }
 
+void hitung_pelanggaran_preferensi(Hari jadwal[MAX_HARI], Dokter dokter[], StatistikDokter statistik[], int jumlah_dokter) {
+    // Reset pelanggaran preferensi
+    for (int i = 0; i < jumlah_dokter; i++) {
+        statistik[i].pelanggaran_preferensi = 0;
+    }
+
+    // Hitung pelanggaran preferensi berdasarkan shift yang diberikan
+    for (int i = 0; i < MAX_HARI; i++) {
+        for (int j = 0; j < SHIFT_PER_HARI; j++) {
+            int id_dokter_jadwal = jadwal[i].shift[j].id_dokter;
+            char shift_dokter_jadwal = jadwal[i].shift[j].shift;
+
+            for (int k = 0; k < jumlah_dokter; k++) {
+                if (dokter[k].id == id_dokter_jadwal &&
+                    dokter[k].preferensi_shift != shift_dokter_jadwal) {
+                    statistik[k].pelanggaran_preferensi++;
+                }
+            }
+        }
+    }
+}
+
+
 void tampilkan_jadwal_mingguan(Dokter dokter[], int jumlah_dokter, Hari jadwal[], int minggu) {
     int awal = (minggu - 1) * 7;
     int akhir = (minggu == 5) ? MAX_HARI : awal + 7;
@@ -134,7 +158,7 @@ void tampilkan_pelanggaran_preferensi(Dokter dokter[], int jumlah_dokter, Statis
         printf("%s (ID %d): %d pelanggaran\n", dokter[i].nama, dokter[i].id, statistik[i].pelanggaran_preferensi);
     }
 }
-
+/*
 int main() {
     Dokter dokter[MAX_DOKTER];
     Hari jadwal[MAX_HARI];
@@ -152,21 +176,10 @@ int main() {
         tampilkan_jadwal_mingguan(dokter, jumlah_dokter, jadwal, minggu);
     }
 
-    // Tampilkan pelanggaran preferensi
-    // Statistik dikumpulkan ulang setelah buat jadwal
-    for (int i = 0; i < jumlah_dokter; i++) statistik[i].pelanggaran_preferensi = 0;
-    for (int i = 0; i < MAX_HARI; i++) {
-        for (int j = 0; j < SHIFT_PER_HARI; j++) {
-            int id = jadwal[i].shift[j].id_dokter;
-            char shift = jadwal[i].shift[j].shift;
-            for (int k = 0; k < jumlah_dokter; k++) {
-                if (dokter[k].id == id && dokter[k].preferensi_shift != shift) {
-                    statistik[k].pelanggaran_preferensi++;
-                }
-            }
-        }
-    }
+    hitung_pelanggaran_preferensi(jadwal[MAX_HARI], dokter[], statistik[], jumlah_dokter)
+
     tampilkan_pelanggaran_preferensi(dokter, jumlah_dokter, statistik);
 
     return 0;
 }
+*/
