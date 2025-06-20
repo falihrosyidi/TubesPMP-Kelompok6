@@ -3,23 +3,23 @@
 #include <stdlib.h>
 
 #define MAX_STR 30
+#define MAX_INPUT_CSV 100
 
-typedef struct Dokter
-{
+typedef struct Dokter {
     int id;
     char* nama;
     int maxShift;
     char prefShift;
     struct Dokter* next; 
-};
+} Dokter;
 
 typedef struct Data {
-	struct Dokter* head;
-	int size;
+    Dokter* head;
+    int size;
 } Data;
 
-Dokter* findDokter(Data listDokter, int id) {
-    Dokter* curr = listDokter.head;
+Dokter* findDokter(Data* listDokter, int id) {
+    Dokter* curr = listDokter->head;
     while (curr != NULL) {
         if (curr->id == id) return curr;
         curr = curr->next;
@@ -27,147 +27,173 @@ Dokter* findDokter(Data listDokter, int id) {
     return NULL;
 }
 
-void addDokter(Data listDokter) {
+void addDokter(Data* listDokter, int id, char* nama, int maxShift, char prefShift) {
     Dokter* newNode = (Dokter*)malloc(sizeof(Dokter));
-    newNode->nama = malloc(MAX_STR*sizeof(char));
-    char* ansPref = malloc(MAX_STR*sizeof(char));
-	// INTERFACE INPUT
-	printf("Nama Dokter: ");
-	fgets(newNode->nama, MAX_STR, stdin);
+    newNode->nama = malloc(strlen(nama) + 1);
+    strcpy(newNode->nama, nama);
+    newNode->maxShift = maxShift;
+    newNode->prefShift = prefShift;
+    newNode->next = NULL;
 
-	printf("Maksimal Shift/Minggu: ");
-	scanf("%d", &(newNode->maxShift));
-
-	printf("Preferensi Shift (Pagi/Siang/Malam): ");
-	fgets(ansPref, MAX_STR, stdin);
-	while(ansPref != "Pagi" || ansPref != "Siang" || ansPref != "Malam"){
-		printf("Input tidak sesuai data. Silahkan input ulang !!!!\n")
-		printf("Preferensi Shift (Pagi/Siang/Malam): ");
-		fgets(ansPref, MAX_STR, stdin);
-	}
-	if(ansPref == "Pagi"){
-		newNode->prefShift = 'P';
-	} else if(ansPref == "Siang"){
-		newNode->prefShift = 'S';
-	} else{
-		newNode->prefShift = 'M';
-	}
-
-	// Memasukkan data di akhir list
-    if (listDokter.head == NULL) {
-    	newNode->id = 1;
-        listDokter.head = newNode;
+    if (listDokter->head == NULL) {
+        newNode->id = (id == -99) ? 1 : id;
+        listDokter->head = newNode;
     } else {
-        Dokter* curr = listDokter.head;
+        Dokter* curr = listDokter->head;
         while (curr->next != NULL) curr = curr->next;
-        newNode->id = curr->id + 1;
+        newNode->id = (id == -99) ? curr->id + 1 : id;
         curr->next = newNode;
+    }
+    listDokter->size++;
+}
+
+void manual_addDokter(Data* listDokter) {
+    char* nama = malloc(MAX_STR);
+    int maxShift;
+    char ansPref[MAX_STR];
+    char prefShift;
+
+    printf("Nama Dokter: ");
+    fgets(nama, MAX_STR, stdin);
+    nama[strcspn(nama, "\n")] = '\0';
+
+    printf("Maksimal Shift/Minggu: ");
+    scanf("%d", &maxShift);
+    getchar(); // consume newline
+
+    printf("Preferensi Shift (Pagi/Siang/Malam): ");
+    fgets(ansPref, MAX_STR, stdin);
+    ansPref[strcspn(ansPref, "\n")] = '\0';
+
+    while (strcmp(ansPref, "Pagi") != 0 && strcmp(ansPref, "Siang") != 0 && strcmp(ansPref, "Malam") != 0) {
+        printf("Input tidak sesuai data. Silahkan input ulang !!!!\n");
+        printf("Preferensi Shift (Pagi/Siang/Malam): ");
+        fgets(ansPref, MAX_STR, stdin);
+        ansPref[strcspn(ansPref, "\n")] = '\0';
+    }
+
+    if (strcmp(ansPref, "Pagi") == 0) prefShift = 'P';
+    else if (strcmp(ansPref, "Siang") == 0) prefShift = 'S';
+    else prefShift = 'M';
+
+    addDokter(listDokter, -99, nama, maxShift, prefShift);
+    free(nama);
+}
+
+void printData(Data* listDokter) {
+    Dokter* curr = listDokter->head;
+    char str[MAX_STR];
+    while (curr != NULL) {
+        if (curr->prefShift == 'P') strcpy(str, "Pagi");
+        else if (curr->prefShift == 'S') strcpy(str, "Siang");
+        else strcpy(str, "Malam");
+
+        printf("ID: %d, Nama: %s, Maksimal Shift/Minggu: %d, Preferensi Shift: %s\n",
+               curr->id, curr->nama, curr->maxShift, str);
+        curr = curr->next;
     }
 }
 
-void printData(Data listDokter){
-	char str[MAX_STR];
-	Dokter* curr = listDokter.head;
-	while(curr!=NULL){
-		if(curr->prefShift == 'P'){
-			str = "Pagi";
-		} else if(curr->prefShift == 'S'){
-			str = "Siang";
-		} else {
-			str = "Malam";
-		}
-		printf(" ID: %d, Nama: %s, Maksimal Shift/Minggu: %d, Preferensi Shift: %s", curr->id, curr->nama, curr->maxShift, curr->str);
-		curr = curr->next;
-	}
-	listDokter.size = i;
-}
+void editDokter(Data* listDokter) {
+    printData(listDokter);
 
-void editDokter(Data listDokter) {
-	// Tampilkan dokter
-	printData(listDokter);
+    int id;
+    printf("Masukkan ID Dokter yang ingin diubah: ");
+    scanf("%d", &id);
+    getchar(); // consume newline
 
-	// Input ID yang dicari
-	int id;
-	printf("Masukkan ID Dokter yang ingin diubah: ");
-	scanf("%d", id);
-
-	// data Dokter
-	Dokter* newNode = findDokter(listDokter, id);
-	while(newNode == NULL){
-		printf("ID dokter tidak ada, masukkan id lagi: ")
-		scanf("%d", id);
-		newNode = findDokter(listDokter, id);
-	}
-
-    char* ansPref = malloc(MAX_STR*sizeof(char));
-
-	// INTERFACE EDIT INPUT
-	printf("-------------------------- EDIT DATA DOKTER ------------------------------------")
-	printf("Nama Dokter: ");
-	fgets(newNode->nama, MAX_STR, stdin);
-
-	printf("Maksimal Shift per Minggu: ");
-	scanf("%d", &(newNode->maxShift));
-
-	printf("Preferensi Shift (Pagi/Siang/Malam): ");
-	fgets(ansPref, MAX_STR, stdin);
-	while(ansPref != "Pagi" || ansPref != "Siang" || ansPref != "Malam"){
-		printf("Input tidak sesuai data. Silahkan input ulang !!!!\n")
-		printf("Preferensi Shift (Pagi/Siang/Malam): ");
-		fgets(ansPref, MAX_STR, stdin);
-	}
-	if(ansPref == "Pagi"){
-		newNode->prefShift = 'P';
-	} else if(ansPref == "Siang"){
-		newNode->prefShift = 'S';
-	} else{
-		newNode->prefShift = 'M';
-	}
-
-	// Memasukkan data di akhir list
-    if (listDokter.head == NULL) {
-    	newNode->id = 1;
-        listDokter.head = newNode;
-        listDokter.size = 1;
-    } else {
-        Dokter* curr = listDokter.head;
-        while (curr->next != NULL) curr = curr->next;
-        newNode->id = curr->id + 1;
-        curr->next = newNode;
-        listDokter.size +=1;
+    Dokter* node = findDokter(listDokter, id);
+    while (node == NULL) {
+        printf("ID dokter tidak ada, masukkan id lagi: ");
+        scanf("%d", &id);
+        getchar();
+        node = findDokter(listDokter, id);
     }
+
+    char ansPref[MAX_STR];
+    printf("-------------------------- EDIT DATA DOKTER ------------------------------------\n");
+    printf("Nama Dokter: ");
+    fgets(node->nama, MAX_STR, stdin);
+    node->nama[strcspn(node->nama, "\n")] = '\0';
+
+    printf("Maksimal Shift per Minggu: ");
+    scanf("%d", &node->maxShift);
+    getchar();
+
+    printf("Preferensi Shift (Pagi/Siang/Malam): ");
+    fgets(ansPref, MAX_STR, stdin);
+    ansPref[strcspn(ansPref, "\n")] = '\0';
+
+    while (strcmp(ansPref, "Pagi") != 0 && strcmp(ansPref, "Siang") != 0 && strcmp(ansPref, "Malam") != 0) {
+        printf("Input tidak sesuai data. Silahkan input ulang !!!!\n");
+        printf("Preferensi Shift (Pagi/Siang/Malam): ");
+        fgets(ansPref, MAX_STR, stdin);
+        ansPref[strcspn(ansPref, "\n")] = '\0';
+    }
+
+    if (strcmp(ansPref, "Pagi") == 0) node->prefShift = 'P';
+    else if (strcmp(ansPref, "Siang") == 0) node->prefShift = 'S';
+    else node->prefShift = 'M';
 }
 
-void deleteNode(Data listDokter){
-	// Input ID
-	printData(listDokter);
-	// Input ID yang dicari
-	int id;
-	printf("Masukkan ID Dokter yang ingin diubah: ");
-	scanf("%d", id);
+void deleteNode(Data* listDokter) {
+    printData(listDokter);
+    int id;
+    printf("Masukkan ID Dokter yang ingin dihapus: ");
+    scanf("%d", &id);
 
-	// data Dokter
-	Dokter* newNode = findDokter(listDokter, id);
-	while(newNode == NULL){
-		printf("ID dokter tidak ada, masukkan id lagi: ")
-		scanf("%d", id);
-		newNode = findDokter(listDokter, id);
-	}
+    Dokter* curr = listDokter->head;
+    Dokter* prev = NULL;
 
-	// Main Function
-	Dokter* temp, curr;
-	curr = listDokter.head;
-	while(curr!=NULL){
-		temp = curr->next;
-		if(temp->id == id){
-			curr->next = temp->next;
-			free(temp->nama);
-			free(temp);
-		}
-		curr = curr->next;
-	}
+    while (curr != NULL && curr->id != id) {
+        prev = curr;
+        curr = curr->next;
+    }
+    if (curr == NULL) {
+        printf("Dokter tidak ditemukan.\n");
+        return;
+    }
+
+    if (prev == NULL) listDokter->head = curr->next;
+    else prev->next = curr->next;
+
+    free(curr->nama);
+    free(curr);
+    listDokter->size--;
 }
 
-void collectData(Data listDokter){
-	
+void collectData(Data* listDokter, char* fileInput) {
+    FILE* fptr = fopen(fileInput, "r");
+    if (fptr == NULL) {
+        printf("File tidak ditemukan\n");
+        return;
+    }
+
+    char str[MAX_INPUT_CSV];
+    while (fgets(str, MAX_INPUT_CSV, fptr)) {
+        int id = atoi(strtok(str, ";"));
+        char* nama = strtok(NULL, ";");
+        int maxShift = atoi(strtok(NULL, ";"));
+        char* ansPref = strtok(NULL, ";\n");
+        char prefShift = (strcmp(ansPref, "Pagi") == 0) ? 'P' : (strcmp(ansPref, "Siang") == 0) ? 'S' : 'M';
+
+        addDokter(listDokter, id, nama, maxShift, prefShift);
+    }
+    fclose(fptr);
+}
+
+void updateData(Data* listDokter, char* namaFile) {
+    FILE* fptr = fopen(namaFile, "w");
+    if (fptr == NULL) {
+        printf("Gagal membuka file untuk penulisan\n");
+        return;
+    }
+
+    Dokter* curr = listDokter->head;
+    while (curr != NULL) {
+        char* ansPref = (curr->prefShift == 'P') ? "Pagi" : (curr->prefShift == 'S') ? "Siang" : "Malam";
+        fprintf(fptr, "%d;%s;%d;%s\n", curr->id, curr->nama, curr->maxShift, ansPref);
+        curr = curr->next;
+    }
+    fclose(fptr);
 }
