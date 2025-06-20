@@ -175,6 +175,7 @@ void collectData(Data* listDokter, char* fileInput) {
 
     char str[MAX_INPUT_CSV];
     while (fgets(str, MAX_INPUT_CSV, fptr)) {
+    	if (strcmp(str, "Nama Dokter;Maksimal Shift per Minggu;Preferensi Shift") == 0) continue;
         int id = atoi(strtok(str, ";"));
         char* nama = strtok(NULL, ";");
         int maxShift = atoi(strtok(NULL, ";"));
@@ -193,6 +194,7 @@ void updateData(Data* listDokter, char* namaFile) {
         return;
     }
 
+    fprintf(fptr, "Nama Dokter;Maksimal Shift per Minggu;Preferensi Shift");
     Dokter* curr = listDokter->head;
     while (curr != NULL) {
         char* ansPref = (curr->prefShift == 'P') ? "Pagi" : (curr->prefShift == 'S') ? "Siang" : "Malam";
