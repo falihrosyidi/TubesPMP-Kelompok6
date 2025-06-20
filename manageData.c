@@ -166,8 +166,8 @@ void manual_deleteDokter(Data* listDokter) {
     deleteDokter(listDokter, id);
 }
 
-void collectData(Data* listDokter, char* fileInput) {
-    FILE* fptr = fopen(fileInput, "r");
+void collectData(Data* listDokter, char* namaFile) {
+    FILE* fptr = fopen(namaFile, "r");
     if (fptr == NULL) {
         printf("File tidak ditemukan\n");
         return;
