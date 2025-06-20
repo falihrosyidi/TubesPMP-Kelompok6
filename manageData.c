@@ -136,12 +136,7 @@ void editDokter(Data* listDokter) {
     else node->prefShift = 'M';
 }
 
-void deleteNode(Data* listDokter) {
-    printData(listDokter);
-    int id;
-    printf("Masukkan ID Dokter yang ingin dihapus: ");
-    scanf("%d", &id);
-
+void deleteDokter(Data* listDokter, int id) {
     Dokter* curr = listDokter->head;
     Dokter* prev = NULL;
 
@@ -150,7 +145,7 @@ void deleteNode(Data* listDokter) {
         curr = curr->next;
     }
     if (curr == NULL) {
-        printf("Dokter tidak ditemukan.\n");
+        printf("Dokter dengan ID %d tidak ditemukan.\n", id);
         return;
     }
 
@@ -160,6 +155,15 @@ void deleteNode(Data* listDokter) {
     free(curr->nama);
     free(curr);
     listDokter->size--;
+    printf("Data dokter dengan ID %d berhasil dihapus.\n", id);
+}
+
+void manual_deleteDokter(Data* listDokter) {
+    printData(listDokter);
+    int id;
+    printf("Masukkan ID Dokter yang ingin dihapus: ");
+    scanf("%d", &id);
+    deleteDokter(listDokter, id);
 }
 
 void collectData(Data* listDokter, char* fileInput) {

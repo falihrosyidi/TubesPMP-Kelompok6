@@ -9,7 +9,8 @@ void addDokter(Data* listDokter, int id, char* nama, int maxShift, char prefShif
 void manual_addDokter(Data* listDokter);
 void printData(Data* listDokter);
 void editDokter(Data* listDokter);
-void deleteNode(Data* listDokter);
+void deleteDokter(Data* listDokter, int id);       
+void manual_deleteDokter(Data* listDokter);       
 void collectData(Data* listDokter, char* fileInput);
 void updateData(Data* listDokter, char* namaFile);
 
