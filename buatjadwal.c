@@ -107,27 +107,9 @@ int buatJadwal(int hari, int tipe_shift, int shiftKe, ShiftHarian jadwal[]) {
     return 0;
 }
 
-void lihatJadwal(ShiftHarian jadwal[]) {
-    const char *shift_str[] = {"Pagi", "Siang", "Malam"};
-    for (int i = 0; i < JUMLAH_HARI_JADWAL; i++) {
-        printf("Hari ke-%d:\n", i + 1);
-        for (int j = 0; j < JUMLAH_SHIFT_PER_HARI; j++) {
-            printf("  Shift %s: ", shift_str[j]);
-            for (int k = 0; k < NDktrperShift; k++) {
-                if (jadwal[i].dokter_bertugas[j][k] != NULL) {
-                    printf("%s", jadwal[i].dokter_bertugas[j][k]->data.nama);
-                    if (status_langgar[i][j][k]) printf(" (langgar)");
-                } else {
-                    printf("KOSONG");
-                }
-                if (k != NDktrperShift - 1) printf(", ");
-            }
-            printf("\n");
-        }
-    }
-}
 
 
+/*
 int main() {
     if (jumlah_dokter < NDktrperShift * JUMLAH_SHIFT_PER_HARI) {
         printf("Jumlah dokter terlalu sedikit.\n");
@@ -143,3 +125,5 @@ int main() {
 
     return 0;
 }
+
+*/
