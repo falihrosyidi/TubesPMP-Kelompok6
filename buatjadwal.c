@@ -2,29 +2,6 @@
 #include <string.h>
 #include "buatjadwal.h"
 
-#define NDokterMax 100
-#define JUMLAH_HARI_JADWAL 30
-#define JUMLAH_SHIFT_PER_HARI 3
-#define NDktrperShift 3
-#define BATAS_TOTAL_SHIFT_DOKTER 30
-
-typedef struct {
-    int id;
-    char nama[30];
-    int maks_shift_per_minggu;
-    int preferensi_shift[JUMLAH_SHIFT_PER_HARI]; 
-} DataDokter;
-
-typedef struct {
-    DataDokter data;
-    int total_shift_terjadwal;
-    int shift_mingguan_terjadwal[JUMLAH_HARI_JADWAL / 7 + 1];
-} Dokter;
-
-typedef struct {
-    Dokter *dokter_bertugas[JUMLAH_SHIFT_PER_HARI][NDktrperShift];
-} ShiftHarian;
-
 Dokter dokter[NDokterMax];
 int jumlah_dokter = 0;
 int status_langgar[JUMLAH_HARI_JADWAL][JUMLAH_SHIFT_PER_HARI][NDktrperShift];
