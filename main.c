@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "manageData.h"
+// #include "buatjadwal.h"
 // #include "informasi.h"
 
 #ifdef _WIN32
@@ -82,8 +83,15 @@ int main(int argc, char const *argv[])
 	// PROGRAM
 	int choice;
 	while(1){
+        // Extract data dari csv
 		collectData(&listDokter, dokterFile);
-		//Run Jadwal
+        // Run Jadwal
+        // ShiftHarian jadwal[JUMLAH_HARI_JADWAL];
+        // reset_jadwal(jadwal);
+
+        // buatJadwal(0, 0, 0, jadwal);
+
+        // lihatJadwal(jadwal);
 
 		// UI MAIN
 		ui_first(&choice);
@@ -113,7 +121,10 @@ int main(int argc, char const *argv[])
 			clearScreen();
 		} else if (choice == 2){
 			clearScreen();
-
+            // if (jumlah_dokter < NDktrperShift * JUMLAH_SHIFT_PER_HARI) {
+            //     printf("Jumlah dokter terlalu sedikit.\n");
+            //     break;
+            // }
 
 		} else if (choice == 0){
 			ui_close();
