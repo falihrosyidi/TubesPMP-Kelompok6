@@ -70,7 +70,7 @@ int updateJadwalCSV(Hari *jadwal, Dokter *dokter, int jumlahDokter, const char *
     }
 
     // Header CSV
-    fprintf(file, "Tanggal,Hari,Shift,Nama Dokter\n");
+    fprintf(file, "Tanggal;Hari;Shift;Nama Dokter\n");
 
     // Array buat nama shift dan hari
     const char *namaShift[] = {"Pagi", "Siang", "Malam"};
@@ -87,7 +87,7 @@ int updateJadwalCSV(Hari *jadwal, Dokter *dokter, int jumlahDokter, const char *
 
             // Validasi shift memastikan sesuai dengan indeks 
             const char *shiftName = (shiftChar == 'P') ? namaShift[0] : (shiftChar == 'S') ? namaShift[1] : namaShift[2];
-            fprintf(file, "%d,%s,%s,", tanggal, namaHari[indexHari], shiftName);
+            fprintf(file, "%d;%s;%s;", tanggal, namaHari[indexHari], shiftName);
 
             if (id >= 1 && id <= jumlahDokter) {
                 fprintf(file, "%s\n", dokter[id - 1].nama);
