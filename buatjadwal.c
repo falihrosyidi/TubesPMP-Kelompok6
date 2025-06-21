@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "buatjadwal.h"
 
 #define NDokterMax 100
 #define JUMLAH_HARI_JADWAL 30
