@@ -66,6 +66,10 @@ void ui_kelolaData(int* choice){
 	printf("\n");
 }
 
+void ui_Jadwal(int* choice){
+	
+}
+
 int main(int argc, char const *argv[])
 {
 	// Deklarasi
