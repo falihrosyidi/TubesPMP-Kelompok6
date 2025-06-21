@@ -1,22 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
-#define MAX_STR 30
-#define MAX_INPUT_CSV 100
-
-typedef struct Dokter {
-    int id;
-    char* nama;
-    int maxShift;
-    char prefShift;
-    struct Dokter* next; 
-} Dokter;
-
-typedef struct Data {
-    Dokter* head;
-    int size;
-} Data;
+#include "manageData.h"
 
 Dokter* findDokter(Data* listDokter, int id) {
     Dokter* curr = listDokter->head;

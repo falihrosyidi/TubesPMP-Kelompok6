@@ -1,6 +1,9 @@
 #ifndef MANAGEDATA_H
 #define MANAGEDATA_H
 
+#define MAX_STR 30
+#define MAX_INPUT_CSV 100
+
 typedef struct Dokter {
     int id;
     char* nama;
