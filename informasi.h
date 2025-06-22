@@ -1,3 +1,6 @@
+#ifndef INFORMASI_H
+#define INFORMASI_H
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -25,3 +28,5 @@ void tampilkan_jadwal_harian(Dokter dokter[], int jumlah_dokter, Hari jadwal[], 
 void tampilkan_jadwal_mingguan(Dokter dokter[], int jumlah_dokter, Hari jadwal[], int minggu);
 void tampilkan_jadwal_bulanan(Dokter dokter[], int jumlah_dokter, Hari jadwal[]);
 void tampilkan_pelanggaran(DataDokter data_dokter[], int jumlah_dokter);
+
+#endif
