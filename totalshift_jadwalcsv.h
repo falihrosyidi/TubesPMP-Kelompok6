@@ -1,34 +1,19 @@
-#ifndef JADWAL_H
-#define JADWAL_H
+#ifndef TOTALSHIFT_JADWALCSV_H
+#define TOTALSHIFT_JADWALCSV_H
+#include "buatjadwal.h"
 
 #define MAX_DOKTER 100
-#define HARI 30
-#define SHIFT_PER_HARI 3
+#define JUMLAH_HARI_JADWAL 30
+#define JUMLAH_SHIFT_PER_HARI 3
+#define NDktrperShift 3
+#define BATAS_TOTAL_SHIFT_DOKTER 30
 
-// Struktur Dokter
-typedef struct {
-    int id;
-    char nama[50];
-    int max_shift_per_minggu;
-    char preferensi_shift; // 'P', 'S', 'M'
-} Dokter;
-
-// Struktur Shift dan Hari
-typedef struct {
-    int id_dokter;
-    char shift; // 'P', 'S', 'M'
-} Shift;
-
-typedef struct {
-    Shift shift[SHIFT_PER_HARI];
-} Hari;
-
+extern DataDokter* arrDataDokter;
+extern Data listDokter;
+extern ShiftHarian jadwal[JUMLAH_HARI_JADWAL];
 
 // Deklarasi fungsi
-void inisialisasi_dokter(Dokter dokter[], int *jumlah);
-
-void printJumlahShiftDokter(Hari *jadwal, Dokter *dokter, int jumlahDokter);
-
-int updateJadwalCSV(Hari *jadwal, Dokter *dokter, int jumlahDokter, const char *filename);
+void printJumlahShiftDokter(ShiftHarian jadwal[], DataDokter* arrDataDokter, int jumlahDokter);
+int updateJadwalCSV(ShiftHarian jadwal[], DataDokter* arrDataDokter, int jumlahDokter, const char *filename);
 
 #endif
