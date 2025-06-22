@@ -116,7 +116,7 @@ int buatJadwal(int hari, int tipe_shift, int shiftKe, ShiftHarian jadwal[]) {
     }
 
     if (best_idx != -1) {
-        Dokter *pilih = &arrDataDokter[best_idx];
+        DataDokter *pilih = &arrDataDokter[best_idx];
         jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = pilih->data->id;
         pilih->total_shift_terjadwal++;
         pilih->shift_mingguan_terjadwal[hari / 7]++;
