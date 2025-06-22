@@ -26,8 +26,8 @@ void clear_arrDataDokter(DataDokter* arrDataDokter){
     free(arrDataDokter);
 }
 
-void init_arrDataDokter(DataDokter** arrDataDokter, Data* listDokter){
-    *arrDataDokter = (DataDokter*)malloc((listDokter->size)*sizeof(DataDokter));
+void init_arrDataDokter(DataDokter* arrDataDokter, Data* listDokter){
+    arrDataDokter = (DataDokter*)malloc((listDokter->size)*sizeof(DataDokter));
     Dokter* curr = listDokter->head;
 
     for (int i = 0; i < listDokter->size; i++)
