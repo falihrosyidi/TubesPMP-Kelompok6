@@ -73,7 +73,7 @@ void printData(Data* listDokter) {
         else if (curr->prefShift == 'S') strcpy(str, "Siang");
         else strcpy(str, "Malam");
 
-        printf("ID: %d, Nama: %s, Maksimal Shift/Minggu: %d, Preferensi Shift: %s\n",
+        printf("ID: %02d, \tNama: %s, \tMaksimal Shift/Minggu: %02d, \tPreferensi Shift: %s\n",
                curr->id, curr->nama, curr->maxShift, str);
         curr = curr->next;
     }
@@ -160,26 +160,24 @@ void collectData(Data* listDokter, char* namaFile) {
 
     char str[MAX_INPUT_CSV];
     while (fgets(str, MAX_INPUT_CSV, fptr)) {
-    	if (strcmp(str, "Nama Dokter;Maksimal Shift per Minggu;Preferensi Shift") == 0) continue;
+    	if (strcmp(str, "Id;Nama Dokter;Maksimal Shift per Minggu;Preferensi Shift\n") == 0) continue;
 
-        char* token = strtok(str, ";");
+        char* token = strtok(str, ";"); 
         if   (!token) continue;
-        int id = atoi(token);
+        int id = atoi(token); 
 
-        char* nama = strtok(NULL, ";");
+        char* nama = strtok(NULL, ";"); 
         if (!nama) continue;
 
-        char* shiftStr = strtok(NULL, ";\n");
+        char* shiftStr = strtok(NULL, ";");
         if (!shiftStr) continue;
-
         int maxShift = atoi(shiftStr);
 
-        char* prefStr = strtok(NULL, ";\n");
+        char* prefStr = strtok(NULL, ";\n"); 
         if (!prefStr) continue;
 
         char prefShift = (strcmp(prefStr, "Pagi") == 0) ? 'P' : (strcmp(prefStr, "Siang") == 0) ? 'S' : 'M';
 
-        printf("ID: %d, Nama: %s, MaksimalShift: %d, prefShift: %c", id, nama, maxShift, prefShift);
         addDokter(listDokter, id, nama, maxShift, prefShift);
     }
     fclose(fptr);
@@ -192,7 +190,7 @@ void updateData(Data* listDokter, char* namaFile) {
         return;
     }
 
-    fprintf(fptr, "Nama Dokter;Maksimal Shift per Minggu;Preferensi Shift");
+    fprintf(fptr, "Id;Nama Dokter;Maksimal Shift per Minggu;Preferensi Shift\n");
     Dokter* curr = listDokter->head;
     while (curr != NULL) {
         char* ansPref = (curr->prefShift == 'P') ? "Pagi" : (curr->prefShift == 'S') ? "Siang" : "Malam";

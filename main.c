@@ -82,8 +82,6 @@ int main(int argc, char const *argv[])
     char dokterFile[MAX_STR_MAIN], jadwalFile[MAX_STR_MAIN];
     strcpy(dokterFile, argv[1]);
     strcpy(jadwalFile, argv[2]);
-    printf("Arg 1 (dokter file): %s\n", dokterFile);
-    printf("Arg 2 (jadwal file): %s\n", jadwalFile);
 
     Data listDokter = {NULL, 0};
 
@@ -92,7 +90,6 @@ int main(int argc, char const *argv[])
 	int choice = 0; //Flag awal
 	while(1){
         // Extract data dari csv
-        printf("Calling collectData...\n");
 		collectData(&listDokter, dokterFile);
         // Run Jadwal
         // ShiftHarian jadwal[JUMLAH_HARI_JADWAL];
