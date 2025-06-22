@@ -1,10 +1,48 @@
 #include <stdio.h>
 #include <string.h>
 #include "buatjadwal.h"
+#include "manageData.h"
 
-DataDokter dokter[NDokterMax];
+DataDokter* arrDataDokter;
 int jumlah_dokter = 0;
 int status_langgar[JUMLAH_HARI_JADWAL][JUMLAH_SHIFT_PER_HARI][NDktrperShift];
+
+void arrPrefShift(Dokter* dokter, int* preferensi_shift){
+    if (dokter->prefShift == "P") preferensi_shift[0] = 1;
+    else if (dokter->prefShift == "S") preferensi_shift[1] = 1;
+    else preferensi_shift[2] = 1;
+}
+
+void clear_arrDataDokter(DataDokter* arrDataDokter){
+    if (arrDataDokter == NULL) {
+        return;
+    }
+    
+    // Note: We don't free arrDataDokter[i].data because these point to 
+    // the original list nodes and aren't owned by this array
+    
+    free(arrDataDokter);
+}
+
+void init_arrDataDokter(DataDokter* arrDataDokter, Data* listDokter){
+    arrDataDokter = (DataDokter*)malloc((listDokter->size)*sizeof(DataDokter));
+    Dokter* curr = listDokter->head;
+
+    for (int i = 0; i < listDokter->size; i++)
+    {
+        arrDataDokter[i].data = curr;
+        for (int j = 0; j < JUMLAH_SHIFT_PER_HARI; i++){
+            arrDataDokter[i].preferensi_shift[j] = 0;
+        }
+        arrPrefShift(curr, arrDataDokter->preferensi_shift);
+        arrDataDokter[i].total_shift_terjadwal = 0;
+        for (int j = 0; j < (JUMLAH_HARI_JADWAL/7 + 1); j++){
+            arrDataDokter[i].shift_mingguan_terjadwal[j] = 0;
+        }
+
+        curr = curr->next;
+    }
+}
 
 void reset_jadwal(ShiftHarian jadwal[]) {
     for (int i = 0; i < JUMLAH_HARI_JADWAL; i++) {
@@ -16,93 +54,93 @@ void reset_jadwal(ShiftHarian jadwal[]) {
         }
     }
     for (int i = 0; i < jumlah_dokter; i++) {
-        dokter[i].total_shift_terjadwal = 0;
+        arrDataDokter[i].total_shift_terjadwal = 0;
         for (int j = 0; j < (JUMLAH_HARI_JADWAL / 7 + 1); j++) {
-            dokter[i].shift_mingguan_terjadwal[j] = 0;
+            arrDataDokter[i].shift_mingguan_terjadwal[j] = 0;
         }
     }
 }
 
-int periksa_valid(Dokter *d, int hari, int tipe_shift, int posisi_dalam_shift, ShiftHarian jadwal[]) {
-    for (int i = 0; i < JUMLAH_SHIFT_PER_HARI; i++) {
-        for (int j = 0; j < NDktrperShift; j++) {
-            if (jadwal[hari].dokter_bertugas[i][j] == d) return 0;
-        }
-    }
-    if (d->total_shift_terjadwal >= BATAS_TOTAL_SHIFT_DOKTER) return 0;
-    int minggu = hari / 7;
-    if (d->shift_mingguan_terjadwal[minggu] >= d->data.maks_shift_per_minggu) return 0;
-    return 1;
-}
+// int periksa_valid(Dokter *d, int hari, int tipe_shift, int posisi_dalam_shift, ShiftHarian jadwal[]) {
+//     for (int i = 0; i < JUMLAH_SHIFT_PER_HARI; i++) {
+//         for (int j = 0; j < NDktrperShift; j++) {
+//             if (jadwal[hari].dokter_bertugas[i][j] == d) return 0;
+//         }
+//     }
+//     if (d->total_shift_terjadwal >= BATAS_TOTAL_SHIFT_DOKTER) return 0;
+//     int minggu = hari / 7;
+//     if (d->shift_mingguan_terjadwal[minggu] >= d->data.maks_shift_per_minggu) return 0;
+//     return 1;
+// }
 
-int hitung_skor(Dokter *d, int tipe_shift, int hari) { /*Bisa diubah ubah guys skornya, */
-    int skor = 0;
-    if (d->data.preferensi_shift[tipe_shift] == 1) skor += 10;
-    else skor -= 5;
-    int minggu = hari / 7;
-    skor += (d->data.maks_shift_per_minggu - d->shift_mingguan_terjadwal[minggu]) * 2;
-    skor -= d->total_shift_terjadwal;
-    return skor;
-}
+// int hitung_skor(Dokter *d, int tipe_shift, int hari) { /*Bisa diubah ubah guys skornya, */
+//     int skor = 0;
+//     if (d->data.preferensi_shift[tipe_shift] == 1) skor += 10;
+//     else skor -= 5;
+//     int minggu = hari / 7;
+//     skor += (d->data.maks_shift_per_minggu - d->shift_mingguan_terjadwal[minggu]) * 2;
+//     skor -= d->total_shift_terjadwal;
+//     return skor;
+// }
 
 int buatJadwal(int hari, int tipe_shift, int shiftKe, ShiftHarian jadwal[]) {
-    if (hari == JUMLAH_HARI_JADWAL) return 1;
+//     if (hari == JUMLAH_HARI_JADWAL) return 1;
 
-    int next_hari = hari;
-    int next_tipe_shift = tipe_shift;
-    int next_shiftKe = shiftKe + 1;
+//     int next_hari = hari;
+//     int next_tipe_shift = tipe_shift;
+//     int next_shiftKe = shiftKe + 1;
 
-    if (next_shiftKe == NDktrperShift) {
-        next_shiftKe = 0;
-        next_tipe_shift++;
-        if (next_tipe_shift == JUMLAH_SHIFT_PER_HARI) {
-            next_tipe_shift = 0;
-            next_hari++;
-        }
-    }
+//     if (next_shiftKe == NDktrperShift) {
+//         next_shiftKe = 0;
+//         next_tipe_shift++;
+//         if (next_tipe_shift == JUMLAH_SHIFT_PER_HARI) {
+//             next_tipe_shift = 0;
+//             next_hari++;
+//         }
+//     }
 
-    int best_idx = -1, best_skor = -9999;
-    for (int i = 0; i < jumlah_dokter; i++) {
-        if (periksa_valid(&dokter[i], hari, tipe_shift, shiftKe, jadwal)) {
-            int skor = hitung_skor(&dokter[i], tipe_shift, hari);
-            if (skor > best_skor) {
-                best_skor = skor;
-                best_idx = i;
-            }
-        }
-    }
+//     int best_idx = -1, best_skor = -9999;
+//     for (int i = 0; i < jumlah_dokter; i++) {
+//         if (periksa_valid(&dokter[i], hari, tipe_shift, shiftKe, jadwal)) {
+//             int skor = hitung_skor(&dokter[i], tipe_shift, hari);
+//             if (skor > best_skor) {
+//                 best_skor = skor;
+//                 best_idx = i;
+//             }
+//         }
+//     }
 
-    if (best_idx != -1) {
-        Dokter *pilih = &dokter[best_idx];
-        jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = pilih;
-        pilih->total_shift_terjadwal++;
-        pilih->shift_mingguan_terjadwal[hari / 7]++;
-        status_langgar[hari][tipe_shift][shiftKe] = 0;
-        if (buatJadwal(next_hari, next_tipe_shift, next_shiftKe, jadwal)) return 1;
-        pilih->total_shift_terjadwal--;
-        pilih->shift_mingguan_terjadwal[hari / 7]--;
-        jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = NULL;
-    }
+//     if (best_idx != -1) {
+//         Dokter *pilih = &dokter[best_idx];
+//         jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = pilih;
+//         pilih->total_shift_terjadwal++;
+//         pilih->shift_mingguan_terjadwal[hari / 7]++;
+//         status_langgar[hari][tipe_shift][shiftKe] = 0;
+//         if (buatJadwal(next_hari, next_tipe_shift, next_shiftKe, jadwal)) return 1;
+//         pilih->total_shift_terjadwal--;
+//         pilih->shift_mingguan_terjadwal[hari / 7]--;
+//         jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = NULL;
+//     }
 
-    /* Jika tidak ada yang valid, pilih yang "melanggar" */
-    for (int i = 0; i < jumlah_dokter; i++) {
-        int skor = hitung_skor(&dokter[i], tipe_shift, hari);
-        if (skor > best_skor) {
-            best_skor = skor;
-            best_idx = i;
-        }
-    }
-    if (best_idx != -1) {
-        Dokter *pilih = &dokter[best_idx];
-        jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = pilih;
-        pilih->total_shift_terjadwal++;
-        pilih->shift_mingguan_terjadwal[hari / 7]++;
-        status_langgar[hari][tipe_shift][shiftKe] = 1;
-        if (buatJadwal(next_hari, next_tipe_shift, next_shiftKe, jadwal)) return 1;
-        pilih->total_shift_terjadwal--;
-        pilih->shift_mingguan_terjadwal[hari / 7]--;
-        jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = NULL;
-    }
+//     /* Jika tidak ada yang valid, pilih yang "melanggar" */
+//     for (int i = 0; i < jumlah_dokter; i++) {
+//         int skor = hitung_skor(&dokter[i], tipe_shift, hari);
+//         if (skor > best_skor) {
+//             best_skor = skor;
+//             best_idx = i;
+//         }
+//     }
+//     if (best_idx != -1) {
+//         Dokter *pilih = &dokter[best_idx];
+//         jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = pilih;
+//         pilih->total_shift_terjadwal++;
+//         pilih->shift_mingguan_terjadwal[hari / 7]++;
+//         status_langgar[hari][tipe_shift][shiftKe] = 1;
+//         if (buatJadwal(next_hari, next_tipe_shift, next_shiftKe, jadwal)) return 1;
+//         pilih->total_shift_terjadwal--;
+//         pilih->shift_mingguan_terjadwal[hari / 7]--;
+//         jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = NULL;
+//     }
 
     return 0;
 }
