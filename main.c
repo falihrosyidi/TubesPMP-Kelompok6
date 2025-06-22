@@ -71,9 +71,9 @@ void ui_kelolaData(int* choice){
 
 void ui_Jadwal(int* choice){
 	printf("----- MENU INFORMASI JADWAL -----\n");
-    printf("1. Jadwal Jaga Hari ini\n");
-    printf("2. Jadwal Jaga Minngu ini\n");
-    printf("3. Jadwal Jaga Bulan ini\n");
+    printf("1. Jadwal Jaga Harian\n");
+    printf("2. Jadwal Jaga Minnguan\n");
+    printf("3. Jadwal Jaga Bulanan\n");
     printf("4. Rincian Total Shift tiap Dokter\n");
     printf("5. Total Pelanggaran Jadwal\n");
     printf("0. Kembali ke Menu Utama\n");
@@ -166,18 +166,33 @@ int main(int argc, char const *argv[])
             	ui_Jadwal(&choice);
             	if(choice == 1){ // Jadwal Jaga Hari ini
                     printf("\n");
+                    int hari; printf("Mau lihat jadwal hari ke berapa (1-30): "); scanf("%d", &hari);
+                    tampilkan_jadwal_harian(arrDokter, listDokter.size, jadwal, hari);
+                    // input jadwal masih belum sesuai !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    printf("\n");
 
             	}else if(choice == 2){ // Jadwal Jaga Minggu ini
+                    printf("\n");
+                    int minggu; printf("Mau lihat jadwal hari ke berapa (1-5): "); scanf("%d", &minggu);
+                    tampilkan_jadwal_mingguan(arrDokter, listDokter.size, jadwal, minggu);
+                    // input jadwal masih belum sesuai !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     printf("\n");
 
             	}else if(choice == 3){ // Jadwal Jaga Bulan ini
                     printf("\n");
+                    printf("\n");
 
             	}else if(choice == 4){ // Rincian Total Shift tiap Dokter
                     printf("\n");
+                    StatistikDokter *statistik; // dummy aja !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    tampilkan_pelanggaran_preferensi(arrDokter, listDokter.size, statistik);
+                    // statistik ntar diganti setelah ada revisi !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    printf("\n");
 
                 }else if(choice == 5){ // Total Pelanggaran Jadwal
+                    printf("\n");
                     printJumlahShiftDokter(jadwal, arrDokter, listDokter.size);
+                    sleepUniv(3);
                     // input jadwal masih belum sesuai !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     printf("\n");
 
