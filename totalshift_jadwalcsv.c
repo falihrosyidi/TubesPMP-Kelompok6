@@ -4,8 +4,8 @@
 #include "totalshift_jadwalcsv.h"
 
 // Variabel global
-DataDokter* arrDataDokter;
-ShiftHarian jadwal[JUMLAH_HARI_JADWAL];
+// DataDokter* arrDataDokter;
+// ShiftHarian jadwal[JUMLAH_HARI_JADWAL];
 
 //Cetak total shift dokter
 void printJumlahShiftDokter(ShiftHarian jadwal[], DataDokter* arrDataDokter, int jumlahDokter) {

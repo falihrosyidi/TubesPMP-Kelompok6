@@ -29,7 +29,8 @@ extern int status_langgar[JUMLAH_HARI_JADWAL][JUMLAH_SHIFT_PER_HARI][NDktrperShi
 // FUNGSI UTILITAS untuk arrDataDokter
 void arrPrefShift(Dokter* dokter, int* preferensi_shift);
 void clear_arrDataDokter(DataDokter* arrDataDokter);
-void init_arrDataDokter(DataDokter** arrDataDokter, Data* listDokter);
+void init_arrDataDokter(DataDokter* arrDataDokter, Data* listDokter);
+DataDokter* findDataDokter(DataDokter* arrDataDokter, int id, int size);
 
 // MAIN FUNGSI OTOMATISASI JADWAL
 void reset_jadwal(ShiftHarian jadwal[]);

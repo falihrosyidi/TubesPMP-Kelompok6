@@ -197,8 +197,8 @@ int main(int argc, char const *argv[])
 
             	}else if(choice == 4){ // Rincian Total Shift tiap Dokter
                     printf("\n");
-                    StatistikDokter *statistik; // dummy aja !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    tampilkan_pelanggaran_preferensi(arrDokter, listDokter.size, statistik);
+                    // StatistikDokter *statistik; // dummy aja !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    // tampilkan_pelanggaran_preferensi(arrDokter, listDokter.size, statistik);
                     // statistik ntar diganti setelah ada revisi !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     printf("\n");
 

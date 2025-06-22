@@ -46,6 +46,15 @@ void init_arrDataDokter(DataDokter* arrDataDokter, Data* listDokter){
     }
 }
 
+DataDokter* findDataDokter(DataDokter* arrDataDokter, int id, int size){
+    for (int i = 0; i < size; i++){
+        if (arrDataDokter[i].data != NULL && arrDataDokter[i].data->id == id) {
+            return &arrDataDokter[i];
+        }
+    }
+    return NULL;
+}
+
 
 // MAIN FUNGSI OTOMATISASI JADWAL
 
