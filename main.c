@@ -11,7 +11,7 @@
 #include <unistd.h>  // For sleep() on POSIX systems
 #endif
 
-#define MAX_STR 30
+#define MAX_STR_MAIN 30
 
 void sleepUniv(float time){
 	#ifdef _WIN32
@@ -36,7 +36,7 @@ void clear_input_buffer() {
 
 void ui_first(int* choice){
 	if (*choice >= 0 && *choice <= 2){
-		printf("Selamat Datang User di Sistem Penjadwalan Dokter (❁´◡`❁)\n");
+		printf("Selamat Datang User di Sistem Penjadwalan Dokter ^_^\n");
 	}
 	sleepUniv(1);
 	printf("1. Kelola Database\n");
@@ -59,7 +59,7 @@ void ui_kelolaData(int* choice){
 	printf("1. Tampilkan Data Dokter\n");
 	printf("2. Tambah Data Dokter\n");
 	printf("3. Hapus Data Dokter\n");
-	printf("0. Kembali ke Menu Utama");
+	printf("0. Kembali ke Menu Utama\n");
 	sleepUniv(2);
 	printf("Masukkan Input : ");
 	scanf("%d", choice);
@@ -74,16 +74,25 @@ void ui_Jadwal(int* choice){
 int main(int argc, char const *argv[])
 {
 	// Deklarasi
-	char dokterFile[MAX_STR], jadwalFile[MAX_STR];
-	strcpy(dokterFile, argv[1]);
-	strcpy(jadwalFile, argv[2]); 
-	Data listDokter = {NULL, 0};
+	if (argc < 3) {
+        printf("Usage: %s <dokterFile.csv> <jadwalFile.csv>\n", argv[0]);
+        return 1;
+    }
+
+    char dokterFile[MAX_STR_MAIN], jadwalFile[MAX_STR_MAIN];
+    strcpy(dokterFile, argv[1]);
+    strcpy(jadwalFile, argv[2]);
+    printf("Arg 1 (dokter file): %s\n", dokterFile);
+    printf("Arg 2 (jadwal file): %s\n", jadwalFile);
+
+    Data listDokter = {NULL, 0};
 
 
 	// PROGRAM
-	int choice;
+	int choice = 0; //Flag awal
 	while(1){
         // Extract data dari csv
+        printf("Calling collectData...\n");
 		collectData(&listDokter, dokterFile);
         // Run Jadwal
         // ShiftHarian jadwal[JUMLAH_HARI_JADWAL];
@@ -92,8 +101,10 @@ int main(int argc, char const *argv[])
         // buatJadwal(0, 0, 0, jadwal);
 
         // lihatJadwal(jadwal);
+        sleepUniv(1);
 
 		// UI MAIN
+        printf("\n");
 		ui_first(&choice);
 		if(choice == 1){
 			clearScreen();
@@ -102,19 +113,24 @@ int main(int argc, char const *argv[])
 				ui_kelolaData(&choice);
 				if(choice == 1){
 					printData(&listDokter);
+                    printf("\n");
 
 				} else if(choice == 2){
 					manual_addDokter(&listDokter);
+                    printf("\n");
+
 				} else if(choice == 3){
 					manual_deleteDokter(&listDokter);
+                    printf("\n");
 
 				} else if(choice == 0){
 					updateData(&listDokter, dokterFile);
+                    printf("\n");
 					break;
 
 				} else {
 					printf("Input yang dimasukkan salah!!!!\nSilahkan input lagi!!!!!!!\n");
-					sleepUniv(1);
+					sleepUniv(0.8);
 					ui_kelolaData(&choice);
 				}
 			}
@@ -128,11 +144,11 @@ int main(int argc, char const *argv[])
 
 		} else if (choice == 0){
 			ui_close();
-			sleepUniv(3);
+			sleepUniv(1);
 			break;
 		} else {
 			printf("Input yang dimasukkan salah!!!!\nSilahkan input lagi!!!!!!!\n");
-			sleepUniv(1);
+			sleepUniv(0.5);
 			ui_first(&choice);
 		}
 	}

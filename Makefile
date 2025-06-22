@@ -1,21 +1,24 @@
 CC = gcc
 CFLAGS = -Wall
-OBJ = manageData.o buatjadwal.o informasi.o totalshift_jadwalcsv.o
+OBJ = main.o manageData.o #buatjadwal.o informasi.o totalshift_jadwalcsv.o
 
 program: $(OBJ)
 	$(CC) -o $@ $^
 
+main.o: main.c manageData.h #buatjadwal.h informasi.h totalshift_jadwalcsv.h
+	$(CC) $(CFLAGS) -c main.c
+
 manageData.o: manageData.c manageData.h
-	$(CC) -c manageData.c $(CFLAGS)
+	$(CC) $(CFLAGS) -c manageData.c
 
 # informasi.o: informasi.c informasi.h manageData.h
-# 	$(CC) -c informasi.c $(CFLAGS)
+# 	$(CC) $(CFLAGS) -c informasi.c 
 
 # buatjadwal.o: buatjadwal.c buatjadwal.h manageData.h
-# 	$(CC) -c buatjadwal.c $(CFLAGS)
+# 	$(CC) $(CFLAGS) -c buatjadwal.c 
 
 # totalshift_jadwalcsv.o: totalshift_jadwalcsv.c totalshift_jadwalcsv.h manageData.h
-# 	$(CC) -c totalshift_jadwalcsv.c $(CFLAGS)
+# 	$(CC) $(CFLAGS) -c totalshift_jadwalcsv.c 
 
 run: 
 	program.exe daftar_dokter.csv jadwal.csv
