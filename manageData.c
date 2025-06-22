@@ -12,6 +12,21 @@ Dokter* findDokter(Data* listDokter, int id) {
     return NULL;
 }
 
+void fixIdDokter(Data* listDokter){
+    if (listDokter == NULL || listDokter->head == NULL) {
+        return; // Handle empty list case
+    }
+
+    Dokter* curr = listDokter->head;
+    int id = 1;
+    while (curr != NULL) {
+        curr->id = id++;
+        curr = curr->next;
+    }
+
+    listDokter->size = id - 1;
+}
+
 void addDokter(Data* listDokter, int id, char* nama, int maxShift, char prefShift) {
     Dokter* newNode = (Dokter*)malloc(sizeof(Dokter));
     newNode->nama = malloc(strlen(nama) + 1);
@@ -30,6 +45,7 @@ void addDokter(Data* listDokter, int id, char* nama, int maxShift, char prefShif
         curr->next = newNode;
     }
     listDokter->size++;
+    fixIdDokter(listDokter);
 }
 
 void manual_addDokter(Data* listDokter) {

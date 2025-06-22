@@ -157,6 +157,14 @@ int main(int argc, char const *argv[])
                     printf("\n");
 
 				} else if(choice == 0){ // Kembali ke Menu Utama
+                    fixIdDokter(&listDokter);
+                    printf("Memperbaiki ID Dokter ");
+                    for (int i = 0; i < 5; i++){
+                        sleepUniv(0.5);
+                        printf(".");
+                    }
+                    printf("\n");
+                    
 					updateData(&listDokter, dokterFile);
                     printf("\n");
 					break;
