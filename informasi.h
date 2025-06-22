@@ -11,7 +11,6 @@
 #define MAX_HARI 30
 #define SHIFT_PER_HARI 3
 #define DOKTER_PER_SHIFT 3
-#define JUMLAH_HARI_JADWAL MAX_HARI
 #define HARI_PER_MINGGU 7
 
 typedef struct {
