@@ -72,16 +72,37 @@ void tampilkan_jadwal_bulanan(Dokter dokter[], int jumlah_dokter, Hari jadwal[])
     }
 }
 
-void tampilkan_pelanggaran(DataDokter data_dokter[], int jumlah_dokter) {
+void tampilkan_pelanggaran(DataDokter data_dokter[], int jumlah_dokter, Hari jadwal[], int jumlah_hari) {
     printf("\n=== Pelanggaran Preferensi Shift ===\n");
+    int pelanggaran[MAX_DOKTER] = {0};
     int total = 0;
+
+    for (int i = 0; i < jumlah_hari; i++) {
+        for (int s = 0; s < SHIFT_PER_HARI; s++) {
+            char shift_kode = jadwal[i].shift[s].shift;
+            for (int d = 0; d < DOKTER_PER_SHIFT; d++) {
+                int id = jadwal[i].shift[s].id_dokter[d];
+                if (id == -1) continue;
+                for (int j = 0; j < jumlah_dokter; j++) {
+                    if (data_dokter[j].data.id == id) {
+                        if (data_dokter[j].data.preferensi_shift != shift_kode) {
+                            pelanggaran[j]++;
+                            total++;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     for (int i = 0; i < jumlah_dokter; i++) {
         printf("%s (ID %d): %d pelanggaran preferensi\n",
-            data_dokter[i].data->nama,
-            data_dokter[i].data->id,
-            data_dokter[i].pelanggaran_preferensi);
-        total += data_dokter[i].pelanggaran_preferensi;
+               data_dokter[i].data.nama,
+               data_dokter[i].data.id,
+               pelanggaran[i]);
     }
+
     printf("\nTotal Pelanggaran Preferensi: %d\n", total);
 }
 /*
@@ -97,7 +118,7 @@ int main() {
     tampilkan_jadwal_harian(dokter, jumlah_dokter, jadwal, 1);
     tampilkan_jadwal_mingguan(dokter, jumlah_dokter, jadwal, 2);
     tampilkan_jadwal_bulanan(dokter, jumlah_dokter, jadwal);
-    tampilkan_pelanggaran(data_dokter, jumlah_dokter);
+    tampilkan_pelanggaran(data_dokter, jumlah_dokter, jadwal, MAX_HARI);
 
     return 0;
 }
