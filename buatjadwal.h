@@ -19,7 +19,7 @@ typedef struct {
 } DataDokter;
 
 typedef struct {
-    DataDokter *dokter_bertugas[JUMLAH_SHIFT_PER_HARI][NDktrperShift];
+    int dokter_bertugas[JUMLAH_SHIFT_PER_HARI][NDktrperShift];
 } ShiftHarian;
 
 extern DataDokter* arrDataDokter;
