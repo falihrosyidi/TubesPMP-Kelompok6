@@ -223,34 +223,49 @@ void updateData(Data* listDokter, const char* namaFile) {
     fptr = NULL;
 }
 
-// Dokter* listToArray(Data* listDokter) {
-//     if (listDokter == NULL || listDokter->size == 0) {
-//         return NULL;
-//     }
+void clearDokterArray(Dokter* arrDokter, int size) {
+    if (arrDokter == NULL) {
+        return;
+    }
+
+    for (int i = 0; i < size; i++) {
+        if (arrDokter[i].nama != NULL) {
+            free(arrDokter[i].nama);
+            arrDokter[i].nama = NULL;
+        }
+    }
     
-//     Dokter* arrDokter = (Dokter*)malloc(listDokter->size * sizeof(Dokter));
-//     if (arrDokter == NULL) {
-//         printf("Memory allocation failed\n");
-//         return NULL;
-//     }
+    free(arrDokter);
+}
+
+Dokter* listToArray(Data* listDokter) {
+    if (listDokter == NULL || listDokter->size == 0) {
+        return NULL;
+    }
     
-//     Dokter* curr = listDokter->head;
-//     for(int i = 0; i < listDokter->size; i++) {
-//         if (curr == NULL) break; // Safety check
-        
-//         arrDokter[i].id = curr->id;
-//         arrDokter[i].maxShift = curr->maxShift;
-//         arrDokter[i].prefShift = curr->prefShift;
-        
-//         // Allocate memory for name and copy it
-//         arrDokter[i].nama = malloc(strlen(curr->nama) + 1);
-//         if (arrDokter[i].nama != NULL) {
-//             strcpy(arrDokter[i].nama, curr->nama);
-//         }
-        
-//         arrDokter[i].next = NULL; // Array elements don't need next pointers
-//         curr = curr->next;
-//     }
+    Dokter* arrDokter = (Dokter*)malloc(listDokter->size * sizeof(Dokter));
+    if (arrDokter == NULL) {
+        printf("Memory allocation failed\n");
+        return NULL;
+    }
     
-//     return arrDokter;
-// }
+    Dokter* curr = listDokter->head;
+    for(int i = 0; i < listDokter->size; i++) {
+        if (curr == NULL) break; // Safety check
+        
+        arrDokter[i].id = curr->id;
+        arrDokter[i].maxShift = curr->maxShift;
+        arrDokter[i].prefShift = curr->prefShift;
+        
+        // Allocate memory for name and copy it
+        arrDokter[i].nama = malloc(strlen(curr->nama) + 1);
+        if (arrDokter[i].nama != NULL) {
+            strcpy(arrDokter[i].nama, curr->nama);
+        }
+        
+        arrDokter[i].next = NULL; // Array elements don't need next pointers
+        curr = curr->next;
+    }
+    
+    return arrDokter;
+}

@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include "manageData.h"
 #include "buatjadwal.h"
-// #include "informasi.h"
+#include "informasi.h"
+#include "totalshift_jadwalcsv.h"
 
 #ifdef _WIN32
 #include <windows.h> // For Sleep() on Windows
@@ -74,7 +75,8 @@ void ui_Jadwal(int* choice){
     printf("2. Jadwal Jaga Minngu ini\n");
     printf("3. Jadwal Jaga Bulan ini\n");
     printf("4. Rincian Total Shift tiap Dokter\n");
-    printf("0. Kembali ke Menu Utama\n");;
+    printf("5. Total Pelanggaran Jadwal\n");
+    printf("0. Kembali ke Menu Utama\n");
 	sleepUniv(0.8);
 	printf("Masukkan Input : ");
 	scanf("%d", choice);
@@ -95,6 +97,7 @@ int main(int argc, char const *argv[])
     strcpy(jadwalFile, argv[2]);
 
     Data listDokter = {NULL, 0};
+    Dokter* arrDokter;
 
     ShiftHarian jadwal[JUMLAH_HARI_JADWAL];
 
@@ -104,6 +107,8 @@ int main(int argc, char const *argv[])
         clearScreen();
         // Extract data dari csv
 		collectData(&listDokter, dokterFile);
+        clearDokterArray(arrDokter,listDokter.size);
+        arrDokter = listToArray(&listDokter);
 
         // Run Jadwal
         reset_jadwal(jadwal);
@@ -111,43 +116,46 @@ int main(int argc, char const *argv[])
         sleepUniv(1);
 
         // Update Jadwal
+        updateJadwalCSV(jadwal, arrDokter, listDokter.size, jadwalFile);
+        // 
+        // 
 
 		// UI MAIN
         printf("\n");
 		ui_first(&choice);
-		if(choice == 1){
+		if(choice == 1){ // Kelola Database
 			clearScreen();
 
 			while(1){
 				ui_kelolaData(&choice);
-				if(choice == 1){
+				if(choice == 1){ // Tampilkan Data Dokter
 					printData(&listDokter);
                     printf("\n");
 
-				} else if(choice == 2){
+				} else if(choice == 2){ // Tambah Data Dokter
 					manual_addDokter(&listDokter);
                     printf("\n");
 
-				} else if(choice == 3){
+				} else if(choice == 3){ // Edit Data Dokter
                     editDokter(&listDokter);
                     printf("\n");
 
-                } else if(choice == 4){
+                } else if(choice == 4){ // Hapus Data Dokter
 					manual_deleteDokter(&listDokter);
                     printf("\n");
 
-				} else if(choice == 0){
+				} else if(choice == 0){ // Kembali ke Menu Utama
 					updateData(&listDokter, dokterFile);
                     printf("\n");
 					break;
 
-				} else {
+				} else { // INPUT SALAH
 					printf("Input yang dimasukkan salah!!!!\nSilahkan input lagi!!!!!!!\n");
 					sleepUniv(0.8);
 					ui_kelolaData(&choice);
 				}
 			}
-		} else if (choice == 2){
+		} else if (choice == 2){ // Lihat Jadwal
 			clearScreen();
             // if (jumlah_dokter < NDktrperShift * JUMLAH_SHIFT_PER_HARI) {
             //     printf("Jumlah dokter terlalu sedikit.\n");
@@ -157,15 +165,24 @@ int main(int argc, char const *argv[])
 
             while(1){
             	ui_Jadwal(&choice);
-            	if(choice == 1){
+            	if(choice == 1){ // Jadwal Jaga Hari ini
+                    printf("\n");
 
-            	}else if(choice == 2){
+            	}else if(choice == 2){ // Jadwal Jaga Minggu ini
+                    printf("\n");
 
-            	}else if(choice == 3){
+            	}else if(choice == 3){ // Jadwal Jaga Bulan ini
+                    printf("\n");
 
-            	}else if(choice == 4){
+            	}else if(choice == 4){ // Rincian Total Shift tiap Dokter
+                    printf("\n");
 
-            	}else if(choice == 0){
+                }else if(choice == 5){ // Total Pelanggaran Jadwal
+                    printJumlahShiftDokter(jadwal, arrDokter, listDokter.size);
+                    // input jadwal masih belum sesuai
+                    printf("\n");
+
+            	}else if(choice == 0){ // Kembali ke Menu Utama
             		printf("\n");
 					break;
 
@@ -176,12 +193,12 @@ int main(int argc, char const *argv[])
             	}
             }
 
-		} else if (choice == 0){
+		} else if (choice == 0){ // Exit Program
 			ui_close();
 			sleepUniv(1);
 			break;
 
-		} else {
+		} else { // INPUT SALAH
 			printf("Input yang dimasukkan salah!!!!\nSilahkan input lagi!!!!!!!\n");
 			sleepUniv(0.8);
 			ui_first(&choice);
