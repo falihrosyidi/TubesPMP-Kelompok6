@@ -117,8 +117,7 @@ int main(int argc, char const *argv[])
 
         // Update Jadwal
         updateJadwalCSV(jadwal, arrDokter, listDokter.size, jadwalFile);
-        // 
-        // 
+        // input jadwal masih belum sesuai !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 		// UI MAIN
         printf("\n");
@@ -179,7 +178,7 @@ int main(int argc, char const *argv[])
 
                 }else if(choice == 5){ // Total Pelanggaran Jadwal
                     printJumlahShiftDokter(jadwal, arrDokter, listDokter.size);
-                    // input jadwal masih belum sesuai
+                    // input jadwal masih belum sesuai !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     printf("\n");
 
             	}else if(choice == 0){ // Kembali ke Menu Utama
