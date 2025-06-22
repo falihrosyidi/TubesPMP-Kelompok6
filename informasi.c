@@ -7,7 +7,7 @@
 
 int get_index_dokter(DataDokter data_dokter[], int jumlah, int id) {
     for (int i = 0; i < jumlah; i++) {
-        if (data_dokter[i].data.id == id) return i;
+        if (data_dokter[i].data->id == id) return i;
     }
     return -1;
 }
@@ -77,8 +77,8 @@ void tampilkan_pelanggaran(DataDokter data_dokter[], int jumlah_dokter, ShiftHar
                 int id = jadwal[i].dokter_bertugas[s][d];
                 if (id == -1) continue;
                 for (int j = 0; j < jumlah_dokter; j++) {
-                    if (data_dokter[j].data.id == id) {
-                        if (data_dokter[j].data.preferensi_shift != shift_kode) {
+                    if (data_dokter[j].data->id == id) {
+                        if (data_dokter[j].data->prefShift != shift_kode) {
                             pelanggaran[j]++;
                             total++;
                         }
@@ -91,8 +91,8 @@ void tampilkan_pelanggaran(DataDokter data_dokter[], int jumlah_dokter, ShiftHar
 
     for (int i = 0; i < jumlah_dokter; i++) {
         printf("%s (ID %d): %d pelanggaran preferensi\n",
-               data_dokter[i].data.nama,
-               data_dokter[i].data.id,
+               data_dokter[i].data->nama,
+               data_dokter[i].data->id,
                pelanggaran[i]);
     }
 

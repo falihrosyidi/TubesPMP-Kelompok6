@@ -13,11 +13,6 @@
 #define DOKTER_PER_SHIFT 3
 #define HARI_PER_MINGGU 7
 
-typedef struct {
-    int id_dokter[DOKTER_PER_SHIFT];
-    char shift;
-} Shift;
-
 int get_index_dokter(DataDokter data_dokter[], int jumlah, int id);
 void tampilkan_jadwal_harian(Dokter dokter[], int jumlah_dokter, ShiftHarian jadwal[], int hari);
 void tampilkan_jadwal_mingguan(Dokter dokter[], int jumlah_dokter, ShiftHarian jadwal[], int minggu);
