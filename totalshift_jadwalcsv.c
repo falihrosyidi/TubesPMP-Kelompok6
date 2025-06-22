@@ -1,99 +1,81 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "totalshift_jadwalcsv.h"
 
-// Inisialisasi dokter (cuma buat testing, jd ijin pakai punya kadit aja ya hehe)
-void inisialisasi_dokter(Dokter dokter[], int *jumlah) {
-    *jumlah = 16;
-    strcpy(dokter[0].nama, "Dr. A"); dokter[0].id = 1; dokter[0].max_shift_per_minggu = 5; dokter[0].preferensi_shift = 'P';
-    strcpy(dokter[1].nama, "Dr. B"); dokter[1].id = 2; dokter[1].max_shift_per_minggu = 5; dokter[1].preferensi_shift = 'S';
-    strcpy(dokter[2].nama, "Dr. C"); dokter[2].id = 3; dokter[2].max_shift_per_minggu = 6; dokter[2].preferensi_shift = 'M';
-    strcpy(dokter[3].nama, "Dr. D"); dokter[3].id = 4; dokter[3].max_shift_per_minggu = 4; dokter[3].preferensi_shift = 'P';
-    strcpy(dokter[4].nama, "Dr. E"); dokter[4].id = 5; dokter[4].max_shift_per_minggu = 5; dokter[4].preferensi_shift = 'S';
-    strcpy(dokter[5].nama, "Dr. F"); dokter[5].id = 6; dokter[5].max_shift_per_minggu = 5; dokter[5].preferensi_shift = 'M';
-    strcpy(dokter[6].nama, "Dr. G"); dokter[6].id = 7; dokter[6].max_shift_per_minggu = 6; dokter[6].preferensi_shift = 'P';
-    strcpy(dokter[7].nama, "Dr. H"); dokter[7].id = 8; dokter[7].max_shift_per_minggu = 4; dokter[7].preferensi_shift = 'S';
-    strcpy(dokter[8].nama, "Dr. I"); dokter[8].id = 9; dokter[8].max_shift_per_minggu = 5; dokter[8].preferensi_shift = 'M';
-    strcpy(dokter[9].nama, "Dr. J"); dokter[9].id = 10; dokter[9].max_shift_per_minggu = 5; dokter[9].preferensi_shift = 'P';
-    strcpy(dokter[10].nama, "Dr. K"); dokter[10].id = 11; dokter[10].max_shift_per_minggu = 5; dokter[10].preferensi_shift = 'S';
-    strcpy(dokter[11].nama, "Dr. L"); dokter[11].id = 12; dokter[11].max_shift_per_minggu = 5; dokter[11].preferensi_shift = 'M';
-    strcpy(dokter[12].nama, "Dr. M"); dokter[12].id = 13; dokter[12].max_shift_per_minggu = 5; dokter[12].preferensi_shift = 'P';
-    strcpy(dokter[13].nama, "Dr. N"); dokter[13].id = 14; dokter[13].max_shift_per_minggu = 5; dokter[13].preferensi_shift = 'S';
-    strcpy(dokter[14].nama, "Dr. O"); dokter[14].id = 15; dokter[14].max_shift_per_minggu = 5; dokter[14].preferensi_shift = 'M';
-    strcpy(dokter[15].nama, "Dr. P"); dokter[15].id = 16; dokter[15].max_shift_per_minggu = 5; dokter[15].preferensi_shift = 'P';
-}
+// Variabel global
+DataDokter* arrDataDokter;
+ShiftHarian jadwal[JUMLAH_HARI_JADWAL];
 
-// Cetak total shift dokter
-void printJumlahShiftDokter(Hari *jadwal, Dokter *dokter, int jumlahDokter) {
-    // Validasi parameter
-    if (jadwal == NULL || dokter == NULL || jumlahDokter <= 0 || jumlahDokter > MAX_DOKTER) {
-        printf("Error: Parameter tidak valid untuk printTotalShiftPerDokter.\n");
+//Cetak total shift dokter
+void printJumlahShiftDokter(ShiftHarian jadwal[], DataDokter* arrDataDokter, int jumlahDokter) {
+    if (jadwal == NULL || arrDataDokter == NULL || jumlahDokter <= 0 || jumlahDokter > MAX_DOKTER) {
+        printf("Error: Salah satu parameter input kosong/tidak valid!.\n");
         return;
     }
-
-    int totalShift[MAX_DOKTER] = {0}; // Array untuk menyimpan total shift per dokter
-
-    // Hitung total shift per dokter
-    for (int hari = 0; hari < HARI; hari++) {
-        for (int shift = 0; shift < SHIFT_PER_HARI; shift++) {
-            int id = jadwal[hari].shift[shift].id_dokter;
-            if (id >= 1 && id <= jumlahDokter) { // Validasi ID dokter (1-based)
-                totalShift[id - 1]++;
+    //Menghitung total shift per dokter dari array jadwal
+    int totalShift[MAX_DOKTER] = {0};
+    for (int hari = 0; hari < JUMLAH_HARI_JADWAL; hari++) {
+        for (int shift = 0; shift < JUMLAH_SHIFT_PER_HARI; shift++) {
+            for (int doc = 0; doc < NDktrperShift; doc++) {
+                int id = jadwal[hari].dokter_bertugas[shift][doc];
+                if (id >= 1 && id <= jumlahDokter) {
+                    totalShift[id - 1]++;
+                }
             }
         }
     }
-
-    // Cetak header
+    //Cetak total shift per dokter dalam list
     printf("\nTotal Shift per Dokter:\n");
-    printf("================================\n");
+    printf("==================================\n");
     printf("ID\tNama Dokter\tTotal Shift\n");
-    printf("================================\n");
+    printf("===================================\n");
 
-    // Cetak total shift tiap dokter
     for (int i = 0; i < jumlahDokter; i++) {
-        printf("%d\t%-15s%d\n", dokter[i].id, dokter[i].nama, totalShift[i]);
+        printf("%d\t%-15s%d\n", arrDataDokter[i].data->id, arrDataDokter[i].data->nama, totalShift[i]);
     }
 }
 
-// Update data ke CSV
-int updateJadwalCSV(Hari *jadwal, Dokter *dokter, int jumlahDokter, const char *filename) {
-    // Validasi bisa di update apa engga
-    if (jadwal == NULL || dokter == NULL || filename == NULL || jumlahDokter <= 0 || jumlahDokter > MAX_DOKTER) {
-        printf("Error: Gabisa update! .\n");
+// Simpan jadwal ke file CSV
+int updateJadwalCSV(ShiftHarian jadwal[], DataDokter* arrDataDokter, int jumlahDokter, const char *filename) {
+    if (jadwal == NULL || arrDataDokter == NULL || filename == NULL || jumlahDokter <= 0 || jumlahDokter > MAX_DOKTER) {
+        printf("Error: Tidak bisa update jadwal! Salah satu parameter tidak valid/kosong.\n");
         return -1;
     }
 
-    FILE *file = fopen(filename, "w"); //Write file jadwal.csv
+    FILE *file = fopen(filename, "w");
     if (file == NULL) {
         printf("Error: Gagal membuka file %s untuk ditulis.\n", filename);
         return -1;
     }
 
-    // Header CSV
     fprintf(file, "Tanggal;Hari;Shift;Nama Dokter\n");
-
-    // Array buat nama shift dan hari
     const char *namaShift[] = {"Pagi", "Siang", "Malam"};
     const char *namaHari[] = {"Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"};
 
-    // Iterasi struct jadwal untuk nulis ke CSV
-    for (int hari = 0; hari < HARI; hari++) {
-        int tanggal = hari + 1; // Tanggal dari 1 sampai 30
-        int indexHari = hari % 7; // Asumsi hari pertama itu minggu
-
-        for (int shift = 0; shift < SHIFT_PER_HARI; shift++) {
-            int id = jadwal[hari].shift[shift].id_dokter;
-            char shiftChar = jadwal[hari].shift[shift].shift;
-
-            // Validasi shift memastikan sesuai dengan indeks 
-            const char *shiftName = (shiftChar == 'P') ? namaShift[0] : (shiftChar == 'S') ? namaShift[1] : namaShift[2];
-            fprintf(file, "%d;%s;%s;", tanggal, namaHari[indexHari], shiftName);
-
-            if (id >= 1 && id <= jumlahDokter) {
-                fprintf(file, "%s\n", dokter[id - 1].nama);
-            } else {
-                fprintf(file, "Tidak Dijadwalkan\n");
+    for (int hari = 0; hari < JUMLAH_HARI_JADWAL; hari++) {
+        int tanggal = hari + 1;
+        int indexHari = hari % 7;
+        for (int shift = 0; shift < JUMLAH_SHIFT_PER_HARI; shift++) {
+            fprintf(file, "%d;%s;%s;", tanggal, namaHari[indexHari], namaShift[shift]);
+            int first = 1;
+            for (int doc = 0; doc < NDktrperShift; doc++) {
+                int id = jadwal[hari].dokter_bertugas[shift][doc];
+                if (id >= 1 && id <= jumlahDokter) {
+                    for (int i = 0; i < jumlahDokter; i++) {
+                        if (arrDataDokter[i].data->id == id) {
+                            if (!first) fprintf(file, ", ");
+                            fprintf(file, "%s", arrDataDokter[i].data->nama);
+                            first = 0;
+                            break;
+                        }
+                    }
+                }
             }
+            if (first) {
+                fprintf(file, "Tidak Dijadwalkan");
+            }
+            fprintf(file, "\n");
         }
     }
 
@@ -102,67 +84,82 @@ int updateJadwalCSV(Hari *jadwal, Dokter *dokter, int jumlahDokter, const char *
     return 1;
 }
 
+// int main() {//TESTING AJA!! ASLINYA GAPERLU
+//     // Inisialisasi listDokter (contoh data dokter aja buat di test), benttuknya disesuain sama punya fatur dan falih
+//     Data listDokter;
+//     listDokter.size = 16;
+//     listDokter.head = NULL;
+//     Dokter* tail = NULL;
 
-int main() {
-    // Inisialisasi data dokter
-    Dokter dokter[MAX_DOKTER];
-    int jumlahDokter;
-    inisialisasi_dokter(dokter, &jumlahDokter);
+//     struct {
+//         char* nama;
+//         int id;
+//         int max_shift;
+//         char pref_shift;
+//     } init_data[] = {
+//         {"Dr. A", 1, 5, 'P'}, {"Dr. B", 2, 5, 'S'}, {"Dr. C", 3, 6, 'M'},
+//         {"Dr. D", 4, 4, 'P'}, {"Dr. E", 5, 5, 'S'}, {"Dr. F", 6, 5, 'M'},
+//         {"Dr. G", 7, 6, 'P'}, {"Dr. H", 8, 4, 'S'}, {"Dr. I", 9, 5, 'M'},
+//         {"Dr. J", 10, 5, 'P'}, {"Dr. K", 11, 5, 'S'}, {"Dr. L", 12, 5, 'M'},
+//         {"Dr. M", 13, 5, 'P'}, {"Dr. N", 14, 5, 'S'}, {"Dr. O", 15, 5, 'M'},
+//         {"Dr. P", 16, 5, 'P'}
+//     };
+//     int jumlah_dokter= listDokter.size;
+   
+//     // Alokasi memori untuk listDokter
+//     for (int i = 0; i < jumlah_dokter; i++) {
+//         Dokter* newDokter = (Dokter*)malloc(sizeof(Dokter));
+//         newDokter->id = init_data[i].id;
+//         newDokter->nama = strdup(init_data[i].nama); // Salin string
+//         newDokter->maxShift = init_data[i].max_shift;
+//         newDokter->prefShift = init_data[i].pref_shift;
+//         newDokter->next = NULL;
+//         if (listDokter.head == NULL) {
+//             listDokter.head = newDokter;
+//             tail = newDokter;
+//         } else {
+//             tail->next = newDokter;
+//             tail = newDokter;
+//         }
+//     }
 
-    // Inisialisasi jadwal
-    Hari jadwal[HARI];
-    // Inisialisasi semua shift dengan id_dokter = 0 dan shift sesuai
-    for (int hari = 0; hari < HARI; hari++) {
-        for (int shift = 0; shift < SHIFT_PER_HARI; shift++) {
-            jadwal[hari].shift[shift].id_dokter = 0;
-            jadwal[hari].shift[shift].shift = shift == 0 ? 'P' : (shift == 1 ? 'S' : 'M');
-        }
-    }
+//     // Alokasi memori untuk arrDataDokter
+//     arrDataDokter = (DataDokter*)malloc(jumlah_dokter * sizeof(DataDokter));
+//     Dokter* current = listDokter.head;
+//     for (int i = 0; i < jumlah_dokter; i++) {
+//         arrDataDokter[i].data = current;
+//         // Inisialisasi preferensi shift (contoh sederhana: 1 untuk shift yang sesuai prefShift, 0 untuk lainnya)
+//         for (int s = 0; s < JUMLAH_SHIFT_PER_HARI; s++) {
+//             arrDataDokter[i].preferensi_shift[s] = (s == (current->prefShift == 'P' ? 0 : current->prefShift == 'S' ? 1 : 2)) ? 1 : 0;
+//         }
+//         arrDataDokter[i].total_shift_terjadwal = 0;
+//         for (int w = 0; w < (JUMLAH_HARI_JADWAL / 7 + 1); w++) {
+//             arrDataDokter[i].shift_mingguan_terjadwal[w] = 0;
+//         }
+//         current = current->next;
+//     }
 
-    // Isi jadwal dengan distribusi realistis (total 90 shift)
-    // Minggu 1 (Hari 1-7): 21 shift
-    int minggu1[7][SHIFT_PER_HARI] = {
-        {1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}, {13, 14, 15}, {16, 1, 2}, {3, 4, 5}
-    };
-    // Minggu 2 (Hari 8-14): 21 shift
-    int minggu2[7][SHIFT_PER_HARI] = {
-        {6, 7, 8}, {9, 10, 11}, {12, 13, 14}, {15, 16, 1}, {2, 3, 4}, {5, 6, 7}, {8, 9, 10}
-    };
-    // Minggu 3 (Hari 15-21): 21 shift
-    int minggu3[7][SHIFT_PER_HARI] = {
-        {11, 12, 13}, {14, 15, 16}, {1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}, {13, 14, 15}
-    };
-    // Minggu 4 (Hari 22-28): 21 shift
-    int minggu4[7][SHIFT_PER_HARI] = {
-        {16, 1, 2}, {3, 4, 5}, {6, 7, 8}, {9, 10, 11}, {12, 13, 14}, {15, 16, 1}, {2, 3, 4}
-    };
-    // Hari 29-30: 6 shift
-    int sisa[2][SHIFT_PER_HARI] = {
-        {5, 6, 7}, {8, 9, 10}
-    };
+//     // Inisialisasi jadwal contoh
+//     for (int hari = 0; hari < JUMLAH_HARI_JADWAL; hari++) {
+//         for (int shift = 0; shift < JUMLAH_SHIFT_PER_HARI; shift++) {
+//             for (int doc = 0; doc < NDktrperShift; doc++) {
+//                 // Isi dengan ID dokter secara berurang (contoh sederhana)
+//                 int id = ((hari * JUMLAH_SHIFT_PER_HARI * NDktrperShift + shift * NDktrperShift + doc) % jumlah_dokter) + 1;
+//                 jadwal[hari].dokter_bertugas[shift][doc] = id;
+//             }
+//         }
+//     }
 
-    // Salin jadwal ke struktur Hari
-    for (int hari = 0; hari < 7; hari++) {
-        for (int shift = 0; shift < SHIFT_PER_HARI; shift++) {
-            jadwal[hari].shift[shift].id_dokter = minggu1[hari][shift];
-            jadwal[hari + 7].shift[shift].id_dokter = minggu2[hari][shift];
-            jadwal[hari + 14].shift[shift].id_dokter = minggu3[hari][shift];
-            jadwal[hari + 21].shift[shift].id_dokter = minggu4[hari][shift];
-            if (hari < 2) {
-                jadwal[hari + 28].shift[shift].id_dokter = sisa[hari][shift];
-            }
-        }
-    }
+//     // Tampilkan total shift
+//     printJumlahShiftDokter(jadwal, arrDataDokter, jumlah_dokter);
 
-    // Cetak total shift dari data input
-    printJumlahShiftDokter(jadwal, dokter, jumlahDokter);
+//     // Simpan ke CSV
+//     if (updateJadwalCSV(jadwal, arrDataDokter, jumlah_dokter, "jadwal.csv") == 1) {
+//         printf("Jadwal telah disimpan ke jadwal.csv!\n");
+//     } else {
+//         printf("Gagal menyimpan jadwal.\n");
+//     }
 
-    // Update ke CSV
-    if (updateJadwalCSV(jadwal, dokter, jumlahDokter, "jadwal.csv") == 1) {
-        printf("Jadwal telah disimpan ke jadwal.csv!\n"); //Double check aja hehe
-    } else {
-        printf("Gagal menyimpan jadwal.\n");
-    }
 
-    return 0;
-}
+//     return 0;
+// }
