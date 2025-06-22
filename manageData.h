@@ -26,6 +26,6 @@ void deleteDokter(Data* listDokter, int id);
 void manual_deleteDokter(Data* listDokter);       
 void collectData(Data* listDokter, char* namaFile);
 void updateData(Data* listDokter, char* namaFile);
-Dokter* listToArray(Data* listDokter);
+// Dokter* listToArray(Data* listDokter);
 
 #endif // MANAGEDATA_H

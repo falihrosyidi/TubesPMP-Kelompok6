@@ -49,16 +49,17 @@ void manual_addDokter(Data* listDokter) {
     printf("Preferensi Shift (Pagi/Siang/Malam): ");
     fgets(ansPref, MAX_STR, stdin);
     ansPref[strcspn(ansPref, "\n")] = '\0';
+    char* ansPref_lwr = strlwr(ansPref);
 
-    while (strcmp(ansPref, "Pagi") != 0 && strcmp(ansPref, "Siang") != 0 && strcmp(ansPref, "Malam") != 0) {
-        printf("Input tidak sesuai data. Silahkan input ulang !!!!\n");
+    while (strcmp(ansPref_lwr, "pagi") != 0 && strcmp(ansPref_lwr, "siang") != 0 && strcmp(ansPref_lwr, "malam") != 0) {
+        printf("Input tidak sesuai data. Silahkan input ulang !!!!\n\n");
         printf("Preferensi Shift (Pagi/Siang/Malam): ");
         fgets(ansPref, MAX_STR, stdin);
         ansPref[strcspn(ansPref, "\n")] = '\0';
     }
 
-    if (strcmp(ansPref, "Pagi") == 0) prefShift = 'P';
-    else if (strcmp(ansPref, "Siang") == 0) prefShift = 'S';
+    if (strcmp(ansPref_lwr, "pagi") == 0) prefShift = 'P';
+    else if (strcmp(ansPref_lwr, "siang") == 0) prefShift = 'S';
     else prefShift = 'M';
 
     addDokter(listDokter, -99, nama, maxShift, prefShift);
@@ -93,6 +94,7 @@ void editDokter(Data* listDokter) {
         scanf("%d", &id);
         getchar();
         node = findDokter(listDokter, id);
+        printf("\n");
     }
 
     char ansPref[MAX_STR];
@@ -108,16 +110,17 @@ void editDokter(Data* listDokter) {
     printf("Preferensi Shift (Pagi/Siang/Malam): ");
     fgets(ansPref, MAX_STR, stdin);
     ansPref[strcspn(ansPref, "\n")] = '\0';
+    char* ansPref_lwr = strlwr(ansPref);
 
-    while (strcmp(ansPref, "Pagi") != 0 && strcmp(ansPref, "Siang") != 0 && strcmp(ansPref, "Malam") != 0) {
-        printf("Input tidak sesuai data. Silahkan input ulang !!!!\n");
+    while (strcmp(ansPref_lwr, "pagi") != 0 && strcmp(ansPref_lwr, "siang") != 0 && strcmp(ansPref_lwr, "malam") != 0) {
+        printf("Input tidak sesuai data. Silahkan input ulang !!!!\n\n");
         printf("Preferensi Shift (Pagi/Siang/Malam): ");
         fgets(ansPref, MAX_STR, stdin);
         ansPref[strcspn(ansPref, "\n")] = '\0';
     }
 
-    if (strcmp(ansPref, "Pagi") == 0) node->prefShift = 'P';
-    else if (strcmp(ansPref, "Siang") == 0) node->prefShift = 'S';
+    if (strcmp(ansPref_lwr, "pagi") == 0) node->prefShift = 'P';
+    else if (strcmp(ansPref_lwr, "siang") == 0) node->prefShift = 'S';
     else node->prefShift = 'M';
 }
 
@@ -181,9 +184,23 @@ void collectData(Data* listDokter, char* namaFile) {
         addDokter(listDokter, id, nama, maxShift, prefShift);
     }
     fclose(fptr);
+    fptr = NULL;
 }
 
+void clearCSV(const char* filename) {
+    FILE* f = fopen(filename, "w");
+    if (f == NULL) {
+        printf("❌ Gagal membuka file %s untuk dikosongkan.\n", filename);
+        return;
+    }
+    fclose(f);
+    printf("✅ File %s telah dikosongkan.\n", filename);
+}
+
+
 void updateData(Data* listDokter, char* namaFile) {
+    clearCSV(namaFile);
+
     FILE* fptr = fopen(namaFile, "w");
     if (fptr == NULL) {
         printf("Gagal membuka file untuk penulisan\n");
@@ -198,36 +215,37 @@ void updateData(Data* listDokter, char* namaFile) {
         curr = curr->next;
     }
     fclose(fptr);
+    fptr = NULL;
 }
 
-Dokter* listToArray(Data* listDokter) {
-    if (listDokter == NULL || listDokter->size == 0) {
-        return NULL;
-    }
+// Dokter* listToArray(Data* listDokter) {
+//     if (listDokter == NULL || listDokter->size == 0) {
+//         return NULL;
+//     }
     
-    Dokter* arrDokter = (Dokter*)malloc(listDokter->size * sizeof(Dokter));
-    if (arrDokter == NULL) {
-        printf("Memory allocation failed\n");
-        return NULL;
-    }
+//     Dokter* arrDokter = (Dokter*)malloc(listDokter->size * sizeof(Dokter));
+//     if (arrDokter == NULL) {
+//         printf("Memory allocation failed\n");
+//         return NULL;
+//     }
     
-    Dokter* curr = listDokter->head;
-    for(int i = 0; i < listDokter->size; i++) {
-        if (curr == NULL) break; // Safety check
+//     Dokter* curr = listDokter->head;
+//     for(int i = 0; i < listDokter->size; i++) {
+//         if (curr == NULL) break; // Safety check
         
-        arrDokter[i].id = curr->id;
-        arrDokter[i].maxShift = curr->maxShift;
-        arrDokter[i].prefShift = curr->prefShift;
+//         arrDokter[i].id = curr->id;
+//         arrDokter[i].maxShift = curr->maxShift;
+//         arrDokter[i].prefShift = curr->prefShift;
         
-        // Allocate memory for name and copy it
-        arrDokter[i].nama = malloc(strlen(curr->nama) + 1);
-        if (arrDokter[i].nama != NULL) {
-            strcpy(arrDokter[i].nama, curr->nama);
-        }
+//         // Allocate memory for name and copy it
+//         arrDokter[i].nama = malloc(strlen(curr->nama) + 1);
+//         if (arrDokter[i].nama != NULL) {
+//             strcpy(arrDokter[i].nama, curr->nama);
+//         }
         
-        arrDokter[i].next = NULL; // Array elements don't need next pointers
-        curr = curr->next;
-    }
+//         arrDokter[i].next = NULL; // Array elements don't need next pointers
+//         curr = curr->next;
+//     }
     
-    return arrDokter;
-}
+//     return arrDokter;
+// }

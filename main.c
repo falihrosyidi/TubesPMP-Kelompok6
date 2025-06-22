@@ -58,7 +58,8 @@ void ui_kelolaData(int* choice){
 	printf("----- MENU KELOLA DATA DOKTER -----\n");
 	printf("1. Tampilkan Data Dokter\n");
 	printf("2. Tambah Data Dokter\n");
-	printf("3. Hapus Data Dokter\n");
+    printf("3. Edit Data Dokter\n");
+	printf("4. Hapus Data Dokter\n");
 	printf("0. Kembali ke Menu Utama\n");
 	sleepUniv(0.8);
 	printf("Masukkan Input : ");
@@ -99,6 +100,7 @@ int main(int argc, char const *argv[])
 	// PROGRAM
 	int choice = 0; //Flag awal
 	while(1){
+        clearScreen();
         // Extract data dari csv
 		collectData(&listDokter, dokterFile);
         // Run Jadwal
@@ -127,6 +129,10 @@ int main(int argc, char const *argv[])
                     printf("\n");
 
 				} else if(choice == 3){
+                    editDokter(&listDokter);
+                    printf("\n");
+
+                } else if(choice == 4){
 					manual_deleteDokter(&listDokter);
                     printf("\n");
 
@@ -141,14 +147,13 @@ int main(int argc, char const *argv[])
 					ui_kelolaData(&choice);
 				}
 			}
-			clearScreen();
 		} else if (choice == 2){
 			clearScreen();
             // if (jumlah_dokter < NDktrperShift * JUMLAH_SHIFT_PER_HARI) {
             //     printf("Jumlah dokter terlalu sedikit.\n");
             //     break;
             // }
-            Dokter* arrDokter = listToArray(&listDokter);
+            // Dokter* arrDokter = listToArray(&listDokter);
 
             while(1){
             	ui_Jadwal(&choice);

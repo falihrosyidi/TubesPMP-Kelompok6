@@ -1,5 +1,5 @@
 Id;Nama Dokter;Maksimal Shift per Minggu;Preferensi Shift
-1;Aisyah;5;Pagi
+1;Fatur;9;Pagi
 2;Budi;4;Malam
 3;Chandra;6;Pagi
 4;Dewi;3;Malam
@@ -18,4 +18,5 @@ Id;Nama Dokter;Maksimal Shift per Minggu;Preferensi Shift
 17;Qomar;5;Pagi
 18;Rina;3;Pagi
 19;Sigit;4;Pagi
-20;Tia;5;Malam
+20;Falih;9;Pagi
+21;Putra;6;Malam
