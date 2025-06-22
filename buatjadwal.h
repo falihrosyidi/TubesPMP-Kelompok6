@@ -3,19 +3,13 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "manageData.h"
 
 #define NDokterMax 100
 #define JUMLAH_HARI_JADWAL 30
 #define JUMLAH_SHIFT_PER_HARI 3
 #define NDktrperShift 3
 #define BATAS_TOTAL_SHIFT_DOKTER 30
-
-typedef struct {
-    int id;
-    char nama[30];
-    int maks_shift_per_minggu;
-    int preferensi_shift[JUMLAH_SHIFT_PER_HARI];
-} Dokter;
 
 typedef struct {
     Dokter data;
