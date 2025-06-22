@@ -154,7 +154,20 @@ void manual_deleteDokter(Data* listDokter) {
     deleteDokter(listDokter, id);
 }
 
-void collectData(Data* listDokter, char* namaFile) {
+void clearList(Data* listDokter) {
+    Dokter* curr = listDokter->head;
+    while (curr != NULL) {
+        Dokter* temp = curr;
+        curr = curr->next;
+        free(temp->nama);
+        free(temp);
+    }
+    listDokter->head = NULL;
+    listDokter->size = 0;
+}
+
+void collectData(Data* listDokter, const char* namaFile) {
+    clearList(listDokter);
     FILE* fptr = fopen(namaFile, "r");
     if (fptr == NULL) {
         printf("File tidak ditemukan\n");
@@ -187,30 +200,22 @@ void collectData(Data* listDokter, char* namaFile) {
     fptr = NULL;
 }
 
-void clearCSV(const char* filename) {
-    FILE* f = fopen(filename, "w");
-    if (f == NULL) {
-        printf("❌ Gagal membuka file %s untuk dikosongkan.\n", filename);
-        return;
-    }
-    fclose(f);
-    printf("✅ File %s telah dikosongkan.\n", filename);
-}
-
-
-void updateData(Data* listDokter, char* namaFile) {
-    clearCSV(namaFile);
-
+void updateData(Data* listDokter, const char* namaFile) {
+    // Now create a fresh file
     FILE* fptr = fopen(namaFile, "w");
     if (fptr == NULL) {
         printf("Gagal membuka file untuk penulisan\n");
         return;
     }
 
+    // Write header
     fprintf(fptr, "Id;Nama Dokter;Maksimal Shift per Minggu;Preferensi Shift\n");
+    
+    // Write data
     Dokter* curr = listDokter->head;
     while (curr != NULL) {
-        char* ansPref = (curr->prefShift == 'P') ? "Pagi" : (curr->prefShift == 'S') ? "Siang" : "Malam";
+        const char* ansPref = (curr->prefShift == 'P') ? "Pagi" : 
+                             (curr->prefShift == 'S') ? "Siang" : "Malam";
         fprintf(fptr, "%d;%s;%d;%s\n", curr->id, curr->nama, curr->maxShift, ansPref);
         curr = curr->next;
     }
