@@ -14,6 +14,8 @@
 
 #define MAX_STR_MAIN 30
 
+// FUNGSI UTILITAS MAIN
+
 void sleepUniv(float time){
 	#ifdef _WIN32
 	    Sleep(time*1000); // Sleep for 2000 milliseconds (2 seconds) on Windows
@@ -34,6 +36,8 @@ void clear_input_buffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
+
+// FUNGSI User Interface
 
 void ui_first(int* choice){
 	if (*choice >= 0 && *choice <= 2){
@@ -84,6 +88,16 @@ void ui_Jadwal(int* choice){
 	printf("\n");
 }	
 
+/* GLOBAL VARIABLE */
+/* Yang di "//" kan artinya udh dari library lain */ 
+
+// DataDokter* arrDataDokter;
+// int jumlah_dokter = 0;
+// int status_langgar[JUMLAH_HARI_JADWAL][JUMLAH_SHIFT_PER_HARI][NDktrperShift];
+Dokter* arrDokter;
+
+
+// FUNGSI MAIN
 int main(int argc, char const *argv[])
 {
 	// Deklarasi
@@ -97,7 +111,6 @@ int main(int argc, char const *argv[])
     strcpy(jadwalFile, argv[2]);
 
     Data listDokter = {NULL, 0};
-    Dokter* arrDokter;
 
     ShiftHarian jadwal[JUMLAH_HARI_JADWAL];
 

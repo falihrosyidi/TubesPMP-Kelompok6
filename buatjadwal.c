@@ -46,6 +46,7 @@ void init_arrDataDokter(DataDokter* arrDataDokter, Data* listDokter){
     }
 }
 
+
 // MAIN FUNGSI OTOMATISASI JADWAL
 
 void reset_jadwal(ShiftHarian jadwal[]) {
