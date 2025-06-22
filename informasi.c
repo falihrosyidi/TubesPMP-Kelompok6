@@ -14,7 +14,7 @@
 
 int get_index_dokter(DataDokter data_dokter[], int jumlah, int id) {
     for (int i = 0; i < jumlah; i++) {
-        if (data_dokter[i].data.id == id) return i;
+        if (data_dokter[i].data->id == id) return i;
     }
     return -1;
 }
@@ -77,8 +77,8 @@ void tampilkan_pelanggaran(DataDokter data_dokter[], int jumlah_dokter) {
     int total = 0;
     for (int i = 0; i < jumlah_dokter; i++) {
         printf("%s (ID %d): %d pelanggaran preferensi\n",
-            data_dokter[i].data.nama,
-            data_dokter[i].data.id,
+            data_dokter[i].data->nama,
+            data_dokter[i].data->id,
             data_dokter[i].pelanggaran_preferensi);
         total += data_dokter[i].pelanggaran_preferensi;
     }
