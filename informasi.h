@@ -19,9 +19,9 @@ typedef struct {
 } Shift;
 
 int get_index_dokter(DataDokter data_dokter[], int jumlah, int id);
-void tampilkan_jadwal_harian(Dokter dokter[], int jumlah_dokter, Hari jadwal[], int hari);
-void tampilkan_jadwal_mingguan(Dokter dokter[], int jumlah_dokter, Hari jadwal[], int minggu);
-void tampilkan_jadwal_bulanan(Dokter dokter[], int jumlah_dokter, Hari jadwal[]);
-void tampilkan_pelanggaran(DataDokter data_dokter[], int jumlah_dokter);
+void tampilkan_jadwal_harian(Dokter dokter[], int jumlah_dokter, ShiftHarian jadwal[], int hari);
+void tampilkan_jadwal_mingguan(Dokter dokter[], int jumlah_dokter, ShiftHarian jadwal[], int minggu);
+void tampilkan_jadwal_bulanan(Dokter dokter[], int jumlah_dokter, ShiftHarian jadwal[]);
+void tampilkan_pelanggaran(DataDokter data_dokter[], int jumlah_dokter, ShiftHarian jadwal[], int jumlah_hari);
 
 #endif
