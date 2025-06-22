@@ -7,6 +7,8 @@ DataDokter* arrDataDokter;
 int jumlah_dokter = 0;
 int status_langgar[JUMLAH_HARI_JADWAL][JUMLAH_SHIFT_PER_HARI][NDktrperShift];
 
+// FUNGSI UTILITAS untuk arrDataDokter
+
 void arrPrefShift(Dokter* dokter, int* preferensi_shift){
     if (dokter->prefShift == "P") preferensi_shift[0] = 1;
     else if (dokter->prefShift == "S") preferensi_shift[1] = 1;
@@ -43,6 +45,8 @@ void init_arrDataDokter(DataDokter* arrDataDokter, Data* listDokter){
         curr = curr->next;
     }
 }
+
+// MAIN FUNGSI OTOMATISASI JADWAL
 
 void reset_jadwal(ShiftHarian jadwal[]) {
     for (int i = 0; i < JUMLAH_HARI_JADWAL; i++) {

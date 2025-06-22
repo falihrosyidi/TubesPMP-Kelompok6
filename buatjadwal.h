@@ -26,10 +26,12 @@ extern DataDokter* arrDataDokter;
 extern int jumlah_dokter;
 extern int status_langgar[JUMLAH_HARI_JADWAL][JUMLAH_SHIFT_PER_HARI][NDktrperShift];
 
+// FUNGSI UTILITAS untuk arrDataDokter
 void arrPrefShift(Dokter* dokter, int* preferensi_shift);
 void clear_arrDataDokter(DataDokter* arrDataDokter);
 void init_arrDataDokter(DataDokter* arrDataDokter, Data* listDokter);
 
+// MAIN FUNGSI OTOMATISASI JADWAL
 void reset_jadwal(ShiftHarian jadwal[]);
 int periksa_valid(DataDokter *d, int hari, int tipe_shift, int posisi_dalam_shift, ShiftHarian jadwal[]);
 int hitung_skor(DataDokter *d, int tipe_shift, int hari);
