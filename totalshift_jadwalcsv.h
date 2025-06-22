@@ -27,7 +27,7 @@ typedef struct {
 // Deklarasi fungsi
 void inisialisasi_dokter(Dokter dokter[], int *jumlah);
 
-void JumlahShiftDokter(Hari *jadwal, Dokter *dokter, int jumlahDokter);
+void printJumlahShiftDokter(Hari *jadwal, Dokter *dokter, int jumlahDokter);
 
 int updateJadwalCSV(Hari *jadwal, Dokter *dokter, int jumlahDokter, const char *filename);
 
