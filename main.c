@@ -1,41 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "utilSystem.h"
 #include "manageData.h"
 #include "buatjadwal.h"
 #include "informasi.h"
 #include "totalshift_jadwalcsv.h"
-
-#ifdef _WIN32
-#include <windows.h> // For Sleep() on Windows
-#else
-#include <unistd.h>  // For sleep() on POSIX systems
-#endif
-
-#define MAX_STR_MAIN 30
-
-// FUNGSI UTILITAS MAIN
-
-void sleepUniv(float time){
-	#ifdef _WIN32
-	    Sleep(time*1000); // Sleep for 2000 milliseconds (2 seconds) on Windows
-	#else
-	    sleep(time);    // Sleep for 2 seconds on POSIX systems
-	#endif
-}
-
-void clearScreen(){
-	#ifdef _WIN32
-	    system("cls");
-	#else //linux or macOS
-	    system("clear");
-	#endif
-}
-
-void clear_input_buffer() {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-}
 
 // FUNGSI User Interface
 
@@ -56,7 +26,7 @@ void ui_first(int* choice){
 
 void ui_close(){
 	printf("Terima kasih telah menggunakan program ini\n");
-	printf("\xF0\x9F\x99\x8F\xF0\x9F\x99\x8F\xF0\x9F\x99\x8F\n");
+	printf("\n");
 }
 
 void ui_kelolaData(int* choice){
@@ -76,7 +46,7 @@ void ui_kelolaData(int* choice){
 void ui_Jadwal(int* choice){
 	printf("----- MENU INFORMASI JADWAL -----\n");
     printf("1. Jadwal Jaga Harian\n");
-    printf("2. Jadwal Jaga Minnguan\n");
+    printf("2. Jadwal Jaga Mingguan\n");
     printf("3. Jadwal Jaga Bulanan\n");
     printf("4. Rincian Total Shift tiap Dokter\n");
     printf("5. Total Pelanggaran Jadwal\n");
@@ -88,10 +58,23 @@ void ui_Jadwal(int* choice){
 	printf("\n");
 }	
 
+// FUNGSI TEST DEBUGING
+
+void printJadwal(ShiftHarian jadwal[]){
+    for (int i = 0; i < JUMLAH_HARI_JADWAL; i++){
+        for (int j = 0; j < SHIFT_PER_HARI; j++){
+            char shift = (j == 0) ? 'P' : (j == 1) ? 'S' : 'M';
+            for (int k = 0; k < NDktrperShift; k++){
+                printf("Hari %d, Shift %c, ID DOKTER: %d\n", i, shift, jadwal[i].dokter_bertugas[j][k]);
+            }
+        }
+    }
+}
+
 /* GLOBAL VARIABLE */
 /* Yang di "//" kan artinya udh dari library lain */ 
 
-// DataDokter* arrDataDokter;
+// DataDokter* arrDataDokter =  NULL;
 // int jumlah_dokter = 0;
 // int status_langgar[JUMLAH_HARI_JADWAL][JUMLAH_SHIFT_PER_HARI][NDktrperShift];
 Dokter* arrDokter;
@@ -118,18 +101,35 @@ int main(int argc, char const *argv[])
 	int choice = 0; //Flag awal
 	while(1){
         clearScreen();
+
         // Extract data dari csv
 		collectData(&listDokter, dokterFile);
+
+        // Array of Dokter
         clearDokterArray(arrDokter,listDokter.size);
         arrDokter = listToArray(&listDokter);
 
+        // Inititae Array of DataDokter
+        jumlah_dokter = listDokter.size;
+        clear_arrDataDokter(arrDataDokter);
+        arrDataDokter = init_arrDataDokter(&listDokter);
+
         // Run Jadwal
+        if (listDokter.size < NDktrperShift * JUMLAH_SHIFT_PER_HARI) {
+            printf("Not enough doctors! Have %d, need %d\n", 
+                listDokter.size, NDktrperShift * JUMLAH_SHIFT_PER_HARI);
+            sleepUniv(2);
+            continue;
+        }
+
         reset_jadwal(jadwal);
         buatJadwal(0, 0, 0, jadwal);
-        sleepUniv(1);
+        // printf("Scheduling completed with status: %d\n", result);
+        // sleepUniv(1);
+        // printJadwal(jadwal);
 
         // Update Jadwal
-        updateJadwalCSV(jadwal, arrDokter, listDokter.size, jadwalFile);
+        updateJadwalCSV(jadwal, arrDataDokter, listDokter.size, jadwalFile);
         // input jadwal masih belum sesuai !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 		// UI MAIN
@@ -169,11 +169,6 @@ int main(int argc, char const *argv[])
 			}
 		} else if (choice == 2){ // Lihat Jadwal
 			clearScreen();
-            // if (jumlah_dokter < NDktrperShift * JUMLAH_SHIFT_PER_HARI) {
-            //     printf("Jumlah dokter terlalu sedikit.\n");
-            //     break;
-            // }
-            // Dokter* arrDokter = listToArray(&listDokter);
 
             while(1){
             	ui_Jadwal(&choice);
@@ -181,32 +176,32 @@ int main(int argc, char const *argv[])
                     printf("\n");
                     int hari; printf("Mau lihat jadwal hari ke berapa (1-30): "); scanf("%d", &hari);
                     tampilkan_jadwal_harian(arrDokter, listDokter.size, jadwal, hari);
-                    // input jadwal masih belum sesuai !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    sleepUniv(1);
                     printf("\n");
 
             	}else if(choice == 2){ // Jadwal Jaga Minggu ini
                     printf("\n");
                     int minggu; printf("Mau lihat jadwal hari ke berapa (1-5): "); scanf("%d", &minggu);
                     tampilkan_jadwal_mingguan(arrDokter, listDokter.size, jadwal, minggu);
-                    // input jadwal masih belum sesuai !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    sleepUniv(1);
                     printf("\n");
 
             	}else if(choice == 3){ // Jadwal Jaga Bulan ini
                     printf("\n");
+                    tampilkan_jadwal_bulanan(arrDokter, listDokter.size, jadwal);
+                    sleepUniv(1);
                     printf("\n");
 
             	}else if(choice == 4){ // Rincian Total Shift tiap Dokter
                     printf("\n");
-                    // StatistikDokter *statistik; // dummy aja !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    // tampilkan_pelanggaran_preferensi(arrDokter, listDokter.size, statistik);
-                    // statistik ntar diganti setelah ada revisi !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    printJumlahShiftDokter(jadwal, arrDataDokter, listDokter.size);
+                    sleepUniv(3);
                     printf("\n");
 
                 }else if(choice == 5){ // Total Pelanggaran Jadwal
                     printf("\n");
-                    printJumlahShiftDokter(jadwal, arrDokter, listDokter.size);
+                    tampilkan_pelanggaran(arrDataDokter, listDokter.size, jadwal, JUMLAH_HARI_JADWAL);
                     sleepUniv(3);
-                    // input jadwal masih belum sesuai !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     printf("\n");
 
             	}else if(choice == 0){ // Kembali ke Menu Utama
@@ -232,5 +227,9 @@ int main(int argc, char const *argv[])
 		}
 	}
 
+    // CLEAN ALL ALLOCATE MEMORY
+    clearList(&listDokter);
+    clearDokterArray(arrDokter,listDokter.size);
+    clear_arrDataDokter(arrDataDokter);
 	return 0;
 }

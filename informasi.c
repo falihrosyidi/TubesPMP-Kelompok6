@@ -30,6 +30,7 @@ void tampilkan_jadwal_harian(Dokter dokter[], int jumlah_dokter, ShiftHarian jad
                 }
             }
         }
+        sleepUniv(1);
     }
 }
 
@@ -55,7 +56,9 @@ void tampilkan_jadwal_mingguan(Dokter dokter[], int jumlah_dokter, ShiftHarian j
                     }
                 }
             }
+            sleepUniv(1);
         }
+        sleepUniv(1);
     }
 }
 

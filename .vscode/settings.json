@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "buatjadwal.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "utilsystem.h": "c"
     }
 }

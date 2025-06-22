@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "buatjadwal.h"
 #include "manageData.h"
 
@@ -26,24 +27,22 @@ void clear_arrDataDokter(DataDokter* arrDataDokter){
     free(arrDataDokter);
 }
 
-void init_arrDataDokter(DataDokter* arrDataDokter, Data* listDokter){
-    arrDataDokter = (DataDokter*)malloc((listDokter->size)*sizeof(DataDokter));
+DataDokter* init_arrDataDokter(Data* listDokter) {
+    if (!listDokter || listDokter->size == 0) return NULL;
+    
+    DataDokter* arr = malloc(listDokter->size * sizeof(DataDokter));
+    if (!arr) return NULL;
+
     Dokter* curr = listDokter->head;
-
-    for (int i = 0; i < listDokter->size; i++)
-    {
-        arrDataDokter[i].data = curr;
-        for (int j = 0; j < JUMLAH_SHIFT_PER_HARI; j++){
-            arrDataDokter[i].preferensi_shift[j] = 0;
-        }
-        arrPrefShift(curr, arrDataDokter->preferensi_shift);
-        arrDataDokter[i].total_shift_terjadwal = 0;
-        for (int j = 0; j < (JUMLAH_HARI_JADWAL/7 + 1); j++){
-            arrDataDokter[i].shift_mingguan_terjadwal[j] = 0;
-        }
-
+    for (int i = 0; i < listDokter->size && curr; i++) {
+        arr[i].data = curr;
+        memset(arr[i].preferensi_shift, 0, sizeof(arr[i].preferensi_shift));
+        arrPrefShift(curr, arr[i].preferensi_shift);
+        arr[i].total_shift_terjadwal = 0;
+        memset(arr[i].shift_mingguan_terjadwal, 0, sizeof(arr[i].shift_mingguan_terjadwal));
         curr = curr->next;
     }
+    return arr;
 }
 
 DataDokter* findDataDokter(DataDokter* arrDataDokter, int id, int size){
@@ -115,7 +114,7 @@ int buatJadwal(int hari, int tipe_shift, int shiftKe, ShiftHarian jadwal[]) {
 
     int best_idx = -1, best_skor = -9999;
     for (int i = 0; i < jumlah_dokter; i++) {
-        if (periksa_valid(&arrDataDokter[i], hari, tipe_shift, shiftKe, jadwal)) {
+        if (periksa_valid(&arrDataDokter[i], hari, tipe_shift, shiftKe, jadwal) == 1) {
             int skor = hitung_skor(&arrDataDokter[i], tipe_shift, hari);
             if (skor > best_skor) {
                 best_skor = skor;

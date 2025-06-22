@@ -38,10 +38,10 @@ void printJumlahShiftDokter(ShiftHarian jadwal[], DataDokter* arrDataDokter, int
 
 // Simpan jadwal ke file CSV
 int updateJadwalCSV(ShiftHarian jadwal[], DataDokter* arrDataDokter, int jumlahDokter, const char *filename) {
-    if (jadwal == NULL || arrDataDokter == NULL || filename == NULL || jumlahDokter <= 0 || jumlahDokter > MAX_DOKTER) {
-        printf("Error: Tidak bisa update jadwal! Salah satu parameter tidak valid/kosong.\n");
-        return -1;
-    }
+    // if (jadwal == NULL || arrDataDokter == NULL || filename == NULL || jumlahDokter <= 0 || jumlahDokter > MAX_DOKTER) {
+    //     printf("Error: Tidak bisa update jadwal! Salah satu parameter tidak valid/kosong.\n");
+    //     return -1;
+    // }
 
     FILE *file = fopen(filename, "w");
     if (file == NULL) {
@@ -80,7 +80,7 @@ int updateJadwalCSV(ShiftHarian jadwal[], DataDokter* arrDataDokter, int jumlahD
     }
 
     fclose(file);
-    printf("Jadwal berhasil disimpan ke %s.\n", filename);
+    // printf("Jadwal berhasil disimpan ke %s.\n", filename);
     return 1;
 }
 

@@ -33,7 +33,7 @@ void addDokter(Data* listDokter, int id, char* nama, int maxShift, char prefShif
 }
 
 void manual_addDokter(Data* listDokter) {
-    char* nama = malloc(MAX_STR);
+    char nama[MAX_STR];
     int maxShift;
     char ansPref[MAX_STR];
     char prefShift;
@@ -63,7 +63,6 @@ void manual_addDokter(Data* listDokter) {
     else prefShift = 'M';
 
     addDokter(listDokter, -99, nama, maxShift, prefShift);
-    free(nama);
 }
 
 void printData(Data* listDokter) {

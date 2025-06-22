@@ -6,12 +6,15 @@
 #include <stdlib.h>
 #include "manageData.h"
 #include "buatjadwal.h"
+#include "utilSystem.h"
 
 #define MAX_DOKTER 100
 #define MAX_HARI 30
 #define SHIFT_PER_HARI 3
 #define DOKTER_PER_SHIFT 3
 #define HARI_PER_MINGGU 7
+
+void sleepUniv(float time);
 
 int get_index_dokter(DataDokter data_dokter[], int jumlah, int id);
 void tampilkan_jadwal_harian(Dokter dokter[], int jumlah_dokter, ShiftHarian jadwal[], int hari);
