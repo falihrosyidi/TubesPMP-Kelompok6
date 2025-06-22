@@ -5,13 +5,6 @@
 #include "buatjadwal.h"
 #include "manageData.h"
 
-#define MAX_DOKTER 100
-#define MAX_HARI 30
-#define SHIFT_PER_HARI 3
-#define DOKTER_PER_SHIFT 3
-#define JUMLAH_HARI_JADWAL MAX_HARI
-#define HARI_PER_MINGGU 7
-
 int get_index_dokter(DataDokter data_dokter[], int jumlah, int id) {
     for (int i = 0; i < jumlah; i++) {
         if (data_dokter[i].data.id == id) return i;
