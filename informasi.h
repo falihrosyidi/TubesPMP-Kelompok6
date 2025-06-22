@@ -18,10 +18,6 @@ typedef struct {
     char shift;
 } Shift;
 
-typedef struct {
-    Shift shift[SHIFT_PER_HARI];
-} Hari;
-
 int get_index_dokter(DataDokter data_dokter[], int jumlah, int id);
 void tampilkan_jadwal_harian(Dokter dokter[], int jumlah_dokter, Hari jadwal[], int hari);
 void tampilkan_jadwal_mingguan(Dokter dokter[], int jumlah_dokter, Hari jadwal[], int minggu);
