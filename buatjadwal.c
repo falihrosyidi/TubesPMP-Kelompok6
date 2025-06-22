@@ -10,8 +10,8 @@ int status_langgar[JUMLAH_HARI_JADWAL][JUMLAH_SHIFT_PER_HARI][NDktrperShift];
 // FUNGSI UTILITAS untuk arrDataDokter
 
 void arrPrefShift(Dokter* dokter, int* preferensi_shift){
-    if (dokter->prefShift == "P") preferensi_shift[0] = 1;
-    else if (dokter->prefShift == "S") preferensi_shift[1] = 1;
+    if (dokter->prefShift == 'P') preferensi_shift[0] = 1;
+    else if (dokter->prefShift == 'S') preferensi_shift[1] = 1;
     else preferensi_shift[2] = 1;
 }
 
@@ -26,14 +26,14 @@ void clear_arrDataDokter(DataDokter* arrDataDokter){
     free(arrDataDokter);
 }
 
-void init_arrDataDokter(DataDokter* arrDataDokter, Data* listDokter){
-    arrDataDokter = (DataDokter*)malloc((listDokter->size)*sizeof(DataDokter));
+void init_arrDataDokter(DataDokter** arrDataDokter, Data* listDokter){
+    *arrDataDokter = (DataDokter*)malloc((listDokter->size)*sizeof(DataDokter));
     Dokter* curr = listDokter->head;
 
     for (int i = 0; i < listDokter->size; i++)
     {
         arrDataDokter[i].data = curr;
-        for (int j = 0; j < JUMLAH_SHIFT_PER_HARI; i++){
+        for (int j = 0; j < JUMLAH_SHIFT_PER_HARI; j++){
             arrDataDokter[i].preferensi_shift[j] = 0;
         }
         arrPrefShift(curr, arrDataDokter->preferensi_shift);
@@ -74,16 +74,16 @@ int periksa_valid(DataDokter *d, int hari, int tipe_shift, int posisi_dalam_shif
     }
     if (d->total_shift_terjadwal >= BATAS_TOTAL_SHIFT_DOKTER) return 0;
     int minggu = hari / 7;
-    if (d->shift_mingguan_terjadwal[minggu] >= d->data.maks_shift_per_minggu) return 0;
+    if (d->shift_mingguan_terjadwal[minggu] >= d->data->maxShift) return 0;
     return 1;
 }
 
 int hitung_skor(DataDokter *d, int tipe_shift, int hari) { /*Bisa diubah ubah guys skornya, */
     int skor = 0;
-    if (d->data.preferensi_shift[tipe_shift] == 1) skor += 10;
+    if (d->preferensi_shift[tipe_shift] == 1) skor += 10;
     else skor -= 5;
     int minggu = hari / 7;
-    skor += (d->data.maks_shift_per_minggu - d->shift_mingguan_terjadwal[minggu]) * 2;
+    skor += (d->data->maxShift - d->shift_mingguan_terjadwal[minggu]) * 2;
     skor -= d->total_shift_terjadwal;
     return skor;
 }
@@ -106,8 +106,8 @@ int buatJadwal(int hari, int tipe_shift, int shiftKe, ShiftHarian jadwal[]) {
 
     int best_idx = -1, best_skor = -9999;
     for (int i = 0; i < jumlah_dokter; i++) {
-        if (periksa_valid(&dokter[i], hari, tipe_shift, shiftKe, jadwal)) {
-            int skor = hitung_skor(&dokter[i], tipe_shift, hari);
+        if (periksa_valid(&arrDataDokter[i], hari, tipe_shift, shiftKe, jadwal)) {
+            int skor = hitung_skor(&arrDataDokter[i], tipe_shift, hari);
             if (skor > best_skor) {
                 best_skor = skor;
                 best_idx = i;
@@ -116,7 +116,7 @@ int buatJadwal(int hari, int tipe_shift, int shiftKe, ShiftHarian jadwal[]) {
     }
 
     if (best_idx != -1) {
-        Dokter *pilih = &dokter[best_idx];
+        Dokter *pilih = &arrDataDokter[best_idx];
         jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = pilih->data->id;
         pilih->total_shift_terjadwal++;
         pilih->shift_mingguan_terjadwal[hari / 7]++;
@@ -124,19 +124,19 @@ int buatJadwal(int hari, int tipe_shift, int shiftKe, ShiftHarian jadwal[]) {
         if (buatJadwal(next_hari, next_tipe_shift, next_shiftKe, jadwal)) return 1;
         pilih->total_shift_terjadwal--;
         pilih->shift_mingguan_terjadwal[hari / 7]--;
-        jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = NULL;
+        jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = -1;
     }
 
     /* Jika tidak ada yang valid, pilih yang "melanggar" */
     for (int i = 0; i < jumlah_dokter; i++) {
-        int skor = hitung_skor(&dokter[i], tipe_shift, hari);
+        int skor = hitung_skor(&arrDataDokter[i], tipe_shift, hari);
         if (skor > best_skor) {
             best_skor = skor;
             best_idx = i;
         }
     }
     if (best_idx != -1) {
-        Dokter *pilih = &dokter[best_idx];
+        DataDokter *pilih = &arrDataDokter[best_idx];
         jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = pilih->data->id;
         pilih->total_shift_terjadwal++;
         pilih->shift_mingguan_terjadwal[hari / 7]++;
@@ -144,7 +144,7 @@ int buatJadwal(int hari, int tipe_shift, int shiftKe, ShiftHarian jadwal[]) {
         if (buatJadwal(next_hari, next_tipe_shift, next_shiftKe, jadwal)) return 1;
         pilih->total_shift_terjadwal--;
         pilih->shift_mingguan_terjadwal[hari / 7]--;
-        jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = NULL;
+        jadwal[hari].dokter_bertugas[tipe_shift][shiftKe] = -1;
     }
 
     return 0;
