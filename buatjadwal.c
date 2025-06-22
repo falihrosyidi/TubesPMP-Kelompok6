@@ -2,7 +2,7 @@
 #include <string.h>
 #include "buatjadwal.h"
 
-Dokter dokter[NDokterMax];
+DataDokter dokter[NDokterMax];
 int jumlah_dokter = 0;
 int status_langgar[JUMLAH_HARI_JADWAL][JUMLAH_SHIFT_PER_HARI][NDktrperShift];
 
@@ -109,21 +109,21 @@ int buatJadwal(int hari, int tipe_shift, int shiftKe, ShiftHarian jadwal[]) {
 
 
 
-/*
-int main() {
-    if (jumlah_dokter < NDktrperShift * JUMLAH_SHIFT_PER_HARI) {
-        printf("Jumlah dokter terlalu sedikit.\n");
-        return 1;
-    }
+// /*
+// int main() {
+//     if (jumlah_dokter < NDktrperShift * JUMLAH_SHIFT_PER_HARI) {
+//         printf("Jumlah dokter terlalu sedikit.\n");
+//         return 1;
+//     }
 
-    ShiftHarian jadwal[JUMLAH_HARI_JADWAL];
-    reset_jadwal(jadwal);
+//     ShiftHarian jadwal[JUMLAH_HARI_JADWAL];
+//     reset_jadwal(jadwal);
 
-    buatJadwal(0, 0, 0, jadwal);
+//     buatJadwal(0, 0, 0, jadwal);
 
-    lihatJadwal(jadwal);
+//     lihatJadwal(jadwal);
 
-    return 0;
-}
+//     return 0;
+// }
 
-*/
+// */

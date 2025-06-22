@@ -96,6 +96,7 @@ int main(int argc, char const *argv[])
 
     Data listDokter = {NULL, 0};
 
+    ShiftHarian jadwal[JUMLAH_HARI_JADWAL];
 
 	// PROGRAM
 	int choice = 0; //Flag awal
@@ -103,14 +104,13 @@ int main(int argc, char const *argv[])
         clearScreen();
         // Extract data dari csv
 		collectData(&listDokter, dokterFile);
+
         // Run Jadwal
-        // ShiftHarian jadwal[JUMLAH_HARI_JADWAL];
-        // reset_jadwal(jadwal);
-
-        // buatJadwal(0, 0, 0, jadwal);
-
-        // lihatJadwal(jadwal);
+        reset_jadwal(jadwal);
+        buatJadwal(0, 0, 0, jadwal);
         sleepUniv(1);
+
+        // Update Jadwal
 
 		// UI MAIN
         printf("\n");
