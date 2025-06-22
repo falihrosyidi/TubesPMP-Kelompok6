@@ -199,3 +199,35 @@ void updateData(Data* listDokter, char* namaFile) {
     }
     fclose(fptr);
 }
+
+Dokter* listToArray(Data* listDokter) {
+    if (listDokter == NULL || listDokter->size == 0) {
+        return NULL;
+    }
+    
+    Dokter* arrDokter = (Dokter*)malloc(listDokter->size * sizeof(Dokter));
+    if (arrDokter == NULL) {
+        printf("Memory allocation failed\n");
+        return NULL;
+    }
+    
+    Dokter* curr = listDokter->head;
+    for(int i = 0; i < listDokter->size; i++) {
+        if (curr == NULL) break; // Safety check
+        
+        arrDokter[i].id = curr->id;
+        arrDokter[i].maxShift = curr->maxShift;
+        arrDokter[i].prefShift = curr->prefShift;
+        
+        // Allocate memory for name and copy it
+        arrDokter[i].nama = malloc(strlen(curr->nama) + 1);
+        if (arrDokter[i].nama != NULL) {
+            strcpy(arrDokter[i].nama, curr->nama);
+        }
+        
+        arrDokter[i].next = NULL; // Array elements don't need next pointers
+        curr = curr->next;
+    }
+    
+    return arrDokter;
+}

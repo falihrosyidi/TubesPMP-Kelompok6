@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "manageData.h"
-// #include "buatjadwal.h"
+#include "buatjadwal.h"
 // #include "informasi.h"
 
 #ifdef _WIN32
@@ -60,7 +60,7 @@ void ui_kelolaData(int* choice){
 	printf("2. Tambah Data Dokter\n");
 	printf("3. Hapus Data Dokter\n");
 	printf("0. Kembali ke Menu Utama\n");
-	sleepUniv(2);
+	sleepUniv(0.8);
 	printf("Masukkan Input : ");
 	scanf("%d", choice);
 	clear_input_buffer();
@@ -68,8 +68,18 @@ void ui_kelolaData(int* choice){
 }
 
 void ui_Jadwal(int* choice){
-	
-}
+	printf("----- MENU INFORMASI JADWAL -----\n");
+    printf("1. Jadwal Jaga Hari ini\n");
+    printf("2. Jadwal Jaga Minngu ini\n");
+    printf("3. Jadwal Jaga Bulan ini\n");
+    printf("4. Rincian Total Shift tiap Dokter\n");
+    printf("0. Kembali ke Menu Utama\n");;
+	sleepUniv(0.8);
+	printf("Masukkan Input : ");
+	scanf("%d", choice);
+	clear_input_buffer();
+	printf("\n");
+}	
 
 int main(int argc, char const *argv[])
 {
@@ -138,14 +148,37 @@ int main(int argc, char const *argv[])
             //     printf("Jumlah dokter terlalu sedikit.\n");
             //     break;
             // }
+            Dokter* arrDokter = listToArray(&listDokter);
+
+            while(1){
+            	ui_Jadwal(&choice);
+            	if(choice == 1){
+
+            	}else if(choice == 2){
+
+            	}else if(choice == 3){
+
+            	}else if(choice == 4){
+
+            	}else if(choice == 0){
+            		printf("\n");
+					break;
+
+            	}else{
+            		printf("Input yang dimasukkan salah!!!!\nSilahkan input lagi!!!!!!!\n");
+					sleepUniv(0.8);
+					ui_Jadwal(&choice);
+            	}
+            }
 
 		} else if (choice == 0){
 			ui_close();
 			sleepUniv(1);
 			break;
+
 		} else {
 			printf("Input yang dimasukkan salah!!!!\nSilahkan input lagi!!!!!!!\n");
-			sleepUniv(0.5);
+			sleepUniv(0.8);
 			ui_first(&choice);
 		}
 	}
