@@ -7,7 +7,7 @@ by **Kelompok 6 - K03** : <br/>
 13221082 -  <br/>
 
 ## **How To Run**
-1. ...
+1. ... 
 
 ## **Deliverables**
 a. Laporan: 
