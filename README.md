@@ -14,7 +14,7 @@ by **Kelompok 6 - K03** : <br/>
 -- Note: untuk yang tidak punya Make bisa ketik "program.exe daftar_dokter.csv jadwal.csv" untuk windows atau "./program daftar_dokter.csv jadwal.csv" untuk Linux/macOS di terminal <br/>
 
 ## **Deliverables**
-a. Laporan: 
+a. Laporan: https://docs.google.com/document/d/1zU_TlNDdhUqKDzZbRjvweqWyeNEEd2ldgwv2hc-9-WU/edit?pli=1&tab=t.0
 
 b. Slide Presentasi:
 
