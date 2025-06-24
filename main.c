@@ -179,7 +179,7 @@ int main(int argc, char const *argv[])
 			clearScreen();
 
             while(1){
-            	ui_Jadwal(&choice);
+                ui_Jadwal(&choice);
             	if(choice == 1){ // Jadwal Jaga Hari ini
                     // printf("\n");
                     int hari; printf("Mau lihat jadwal hari ke berapa (1-30): "); scanf("%d", &hari);
@@ -223,14 +223,14 @@ int main(int argc, char const *argv[])
                     printf("\n");
 
             	}else if(choice == 0){ // Kembali ke Menu Utama
-            		printf("\n");
+                    printf("\n");
 					break;
 
-            	}else{
-            		printf("Input yang dimasukkan salah!!!!\nSilahkan input lagi!!!!!!!\n");
+                }else{
+                    printf("Input yang dimasukkan salah!!!!\nSilahkan input lagi!!!!!!!\n");
 					sleepUniv(0.8);
 					ui_Jadwal(&choice);
-            	}
+                }
             }
 
 		} else if (choice == 0){ // Exit Program
