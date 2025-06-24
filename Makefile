@@ -26,5 +26,8 @@ totalshift_jadwalcsv.o: totalshift_jadwalcsv.c totalshift_jadwalcsv.h manageData
 run: 
 	program.exe daftar_dokter.csv jadwal.csv
 
+run2:
+	./program daftar_dokter.csv jadwal.csv
+
 clean:
 	del /f /q *.o program.exe
