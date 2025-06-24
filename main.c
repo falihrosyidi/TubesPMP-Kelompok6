@@ -114,10 +114,6 @@ int main(int argc, char const *argv[])
         clear_arrDataDokter(arrDataDokter);
         arrDataDokter = init_arrDataDokter(&listDokter);
 
-        // Update Jadwal
-        updateJadwalCSV(jadwal, arrDataDokter, listDokter.size, jadwalFile);
-        // input jadwal masih belum sesuai !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 		// UI MAIN
         printf("\n");
 		ui_first(&choice);
@@ -172,6 +168,9 @@ int main(int argc, char const *argv[])
 
             reset_jadwal(jadwal);
             buatJadwal(0, 0, 0, jadwal);
+
+            // Update Jadwal
+            updateJadwalCSV(jadwal, arrDataDokter, listDokter.size, jadwalFile);
             
 			clearScreen();
 
