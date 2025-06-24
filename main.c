@@ -83,16 +83,16 @@ Dokter* arrDokter;
 // FUNGSI MAIN
 int main(int argc, char const *argv[])
 {
-	// Deklarasi
+    // Deklarasi
 	if (argc < 3) {
         printf("Usage: %s <dokterFile.csv> <jadwalFile.csv>\n", argv[0]);
         return 1;
     }
-
+    
     char dokterFile[MAX_STR_MAIN], jadwalFile[MAX_STR_MAIN];
     strcpy(dokterFile, argv[1]);
     strcpy(jadwalFile, argv[2]);
-
+    
     Data listDokter = {NULL, 0};
 
     ShiftHarian jadwal[JUMLAH_HARI_JADWAL];
@@ -104,15 +104,23 @@ int main(int argc, char const *argv[])
 
         // Extract data dari csv
 		collectData(&listDokter, dokterFile);
-
+        
         // Array of Dokter
-        clearDokterArray(arrDokter,listDokter.size);
+        clearDokterArray(arrDokter,jumlah_dokter);
         arrDokter = listToArray(&listDokter);
 
         // Inititae Array of DataDokter
         clear_arrDataDokter(arrDataDokter);
         arrDataDokter = init_arrDataDokter(&listDokter);
         jumlah_dokter = listDokter.size;
+
+        // Run Jadwal
+        reset_jadwal(jadwal);
+        if(jumlah_dokter >= NDktrperShift * JUMLAH_SHIFT_PER_HARI ){
+            buatJadwal(0, 0, 0, jadwal);
+        }
+        // Update Jadwal
+        updateJadwalCSV(jadwal, arrDataDokter, listDokter.size, jadwalFile);
 
 		// UI MAIN
         printf("\n");
@@ -163,14 +171,8 @@ int main(int argc, char const *argv[])
                 printf("Doktor yang ada kurang! Ada %d, butunya %d\n", 
                     listDokter.size, NDktrperShift * JUMLAH_SHIFT_PER_HARI);
                 sleepUniv(1);
-                continue;;
+                continue;
             }
-
-            reset_jadwal(jadwal);
-            buatJadwal(0, 0, 0, jadwal);
-
-            // Update Jadwal
-            updateJadwalCSV(jadwal, arrDataDokter, listDokter.size, jadwalFile);
             
 			clearScreen();
 

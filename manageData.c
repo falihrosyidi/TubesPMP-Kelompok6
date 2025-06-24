@@ -45,7 +45,7 @@ void addDokter(Data* listDokter, int id, char* nama, int maxShift, char prefShif
         curr->next = newNode;
     }
     listDokter->size++;
-    fixIdDokter(listDokter);
+    // fixIdDokter(listDokter);
 }
 
 void manual_addDokter(Data* listDokter) {
@@ -89,8 +89,7 @@ void printData(Data* listDokter) {
         else if (curr->prefShift == 'S') strcpy(str, "Siang");
         else strcpy(str, "Malam");
 
-        printf("ID: %02d, \tNama: %s, \tMaksimal Shift/Minggu: %02d, \tPreferensi Shift: %s\n",
-               curr->id, curr->nama, curr->maxShift, str);
+        printf("ID: %02d, \tNama: %s, \tMaksimal Shift/Minggu: %02d, \tPreferensi Shift: %s\n",curr->id, curr->nama, curr->maxShift, str);
         curr = curr->next;
     }
 }
@@ -191,7 +190,7 @@ void collectData(Data* listDokter, const char* namaFile) {
 
     char str[MAX_INPUT_CSV];
     while (fgets(str, MAX_INPUT_CSV, fptr)) {
-    	if (strcmp(str, "Id;Nama Dokter;Maksimal Shift per Minggu;Preferensi Shift\n") == 0) continue;
+        if (strcmp(str, "Id;Nama Dokter;Maksimal Shift per Minggu;Preferensi Shift\n") == 0) continue;
 
         char* token = strtok(str, ";"); 
         if   (!token) continue;
@@ -229,8 +228,7 @@ void updateData(Data* listDokter, const char* namaFile) {
     // Write data
     Dokter* curr = listDokter->head;
     while (curr != NULL) {
-        const char* ansPref = (curr->prefShift == 'P') ? "Pagi" : 
-                             (curr->prefShift == 'S') ? "Siang" : "Malam";
+        const char* ansPref = (curr->prefShift == 'P') ? "Pagi" : (curr->prefShift == 'S') ? "Siang" : "Malam";
         fprintf(fptr, "%d;%s;%d;%s\n", curr->id, curr->nama, curr->maxShift, ansPref);
         curr = curr->next;
     }
@@ -251,6 +249,7 @@ void clearDokterArray(Dokter* arrDokter, int size) {
     }
     
     free(arrDokter);
+    arrDokter = NULL;
 }
 
 Dokter* listToArray(Data* listDokter) {
