@@ -15,7 +15,7 @@ void ui_first(int* choice){
 	}
 	sleepUniv(1);
 	printf("1. Kelola Database\n");
-	printf("2. Lihat Jadwal\n");
+	printf("2. Informasi Jadwal\n");
 	printf("0. Exit Program\n");
 	sleepUniv(0.5);
 	printf("Masukkan Input : ");
@@ -183,8 +183,8 @@ int main(int argc, char const *argv[])
             	if(choice == 1){ // Jadwal Jaga Hari ini
                     // printf("\n");
                     int hari; printf("Mau lihat jadwal hari ke berapa (1-30): "); scanf("%d", &hari);
-                    while (hari < 0 && hari > 30){
-                        printf("\nInput tidak sesuai. Silahkan Masukkan lagi!!!!");
+                    while (hari < 0 || hari > 30){
+                        printf("\nInput tidak sesuai. Silahkan Masukkan lagi!!!!\n");
                         printf("Mau lihat jadwal hari ke berapa (1-30): "); scanf("%d", &hari);
                     }
                     
@@ -195,8 +195,8 @@ int main(int argc, char const *argv[])
             	}else if(choice == 2){ // Jadwal Jaga Minggu ini
                     // printf("\n");
                     int minggu; printf("Mau lihat jadwal Minggu ke berapa (1-5): "); scanf("%d", &minggu);
-                    while (minggu < 0 && minggu> 5){
-                        printf("\nInput tidak sesuai. Silahkan Masukkan lagi!!!!");
+                    while (minggu < 0 || minggu> 5){
+                        printf("\nInput tidak sesuai. Silahkan Masukkan lagi!!!!\n");
                         printf("Mau lihat jadwal Minggu ke berapa (1-5): "); scanf("%d", &minggu);
                     }
 
