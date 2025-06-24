@@ -114,20 +114,6 @@ int main(int argc, char const *argv[])
         clear_arrDataDokter(arrDataDokter);
         arrDataDokter = init_arrDataDokter(&listDokter);
 
-        // Run Jadwal
-        if (listDokter.size < NDktrperShift * JUMLAH_SHIFT_PER_HARI) {
-            printf("Not enough doctors! Have %d, need %d\n", 
-                listDokter.size, NDktrperShift * JUMLAH_SHIFT_PER_HARI);
-            sleepUniv(2);
-            continue;
-        }
-
-        reset_jadwal(jadwal);
-        buatJadwal(0, 0, 0, jadwal);
-        // printf("Scheduling completed with status: %d\n", result);
-        // sleepUniv(1);
-        // printJadwal(jadwal);
-
         // Update Jadwal
         updateJadwalCSV(jadwal, arrDataDokter, listDokter.size, jadwalFile);
         // input jadwal masih belum sesuai !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -176,6 +162,17 @@ int main(int argc, char const *argv[])
 				}
 			}
 		} else if (choice == 2){ // Lihat Jadwal
+            // Run Jadwal
+            if (listDokter.size < NDktrperShift * JUMLAH_SHIFT_PER_HARI) {
+                printf("Doktor yang ada kurang! Ada %d, butunya %d\n", 
+                    listDokter.size, NDktrperShift * JUMLAH_SHIFT_PER_HARI);
+                sleepUniv(1);
+                continue;;
+            }
+
+            reset_jadwal(jadwal);
+            buatJadwal(0, 0, 0, jadwal);
+            
 			clearScreen();
 
             while(1){
@@ -239,7 +236,7 @@ int main(int argc, char const *argv[])
 			break;
 
 		} else { // INPUT SALAH
-			printf("Input yang dimasukkan salah!!!!\nSilahkan input lagi!!!!!!!\n");
+			printf("Input yang dimasukkan salah!!!!\nSilahkan input lagi!!!!!!!\n\n");
 			sleepUniv(0.8);
 			ui_first(&choice);
 		}
