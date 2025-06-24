@@ -16,6 +16,6 @@ by **Kelompok 6 - K03** : <br/>
 ## **Deliverables**
 a. Laporan: https://docs.google.com/document/d/1zU_TlNDdhUqKDzZbRjvweqWyeNEEd2ldgwv2hc-9-WU/edit?pli=1&tab=t.0
 
-b. Slide Presentasi:
+b. Slide Presentasi: https://www.canva.com/design/DAGrN1Wy6Wc/LMTrtgAZghOFC386-LzUKg/edit
 
 c. Video:
