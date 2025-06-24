@@ -17,7 +17,7 @@ void ui_first(int* choice){
 	printf("1. Kelola Database\n");
 	printf("2. Lihat Jadwal\n");
 	printf("0. Exit Program\n");
-	sleepUniv(1);
+	sleepUniv(0.5);
 	printf("Masukkan Input : ");
 	scanf("%d", choice);
 	clear_input_buffer();
@@ -36,7 +36,7 @@ void ui_kelolaData(int* choice){
     printf("3. Edit Data Dokter\n");
 	printf("4. Hapus Data Dokter\n");
 	printf("0. Kembali ke Menu Utama\n");
-	sleepUniv(0.8);
+	sleepUniv(0.5);
 	printf("Masukkan Input : ");
 	scanf("%d", choice);
 	clear_input_buffer();
@@ -51,7 +51,7 @@ void ui_Jadwal(int* choice){
     printf("4. Rincian Total Shift tiap Dokter\n");
     printf("5. Total Pelanggaran Jadwal\n");
     printf("0. Kembali ke Menu Utama\n");
-	sleepUniv(0.8);
+	sleepUniv(0.5);
 	printf("Masukkan Input : ");
 	scanf("%d", choice);
 	clear_input_buffer();
@@ -181,33 +181,43 @@ int main(int argc, char const *argv[])
             while(1){
             	ui_Jadwal(&choice);
             	if(choice == 1){ // Jadwal Jaga Hari ini
-                    printf("\n");
+                    // printf("\n");
                     int hari; printf("Mau lihat jadwal hari ke berapa (1-30): "); scanf("%d", &hari);
+                    while (hari < 0 && hari > 30){
+                        printf("\nInput tidak sesuai. Silahkan Masukkan lagi!!!!");
+                        printf("Mau lihat jadwal hari ke berapa (1-30): "); scanf("%d", &hari);
+                    }
+                    
                     tampilkan_jadwal_harian(arrDokter, listDokter.size, jadwal, hari);
                     sleepUniv(1);
                     printf("\n");
 
             	}else if(choice == 2){ // Jadwal Jaga Minggu ini
-                    printf("\n");
-                    int minggu; printf("Mau lihat jadwal hari ke berapa (1-5): "); scanf("%d", &minggu);
+                    // printf("\n");
+                    int minggu; printf("Mau lihat jadwal Minggu ke berapa (1-5): "); scanf("%d", &minggu);
+                    while (minggu < 0 && minggu> 5){
+                        printf("\nInput tidak sesuai. Silahkan Masukkan lagi!!!!");
+                        printf("Mau lihat jadwal Minggu ke berapa (1-5): "); scanf("%d", &minggu);
+                    }
+
                     tampilkan_jadwal_mingguan(arrDokter, listDokter.size, jadwal, minggu);
                     sleepUniv(1);
                     printf("\n");
 
             	}else if(choice == 3){ // Jadwal Jaga Bulan ini
-                    printf("\n");
+                    // printf("\n");
                     tampilkan_jadwal_bulanan(arrDokter, listDokter.size, jadwal);
                     sleepUniv(1);
                     printf("\n");
 
             	}else if(choice == 4){ // Rincian Total Shift tiap Dokter
-                    printf("\n");
+                    // printf("\n");
                     printJumlahShiftDokter(jadwal, arrDataDokter, listDokter.size);
                     sleepUniv(3);
                     printf("\n");
 
                 }else if(choice == 5){ // Total Pelanggaran Jadwal
-                    printf("\n");
+                    // printf("\n");
                     tampilkan_pelanggaran(arrDataDokter, listDokter.size, jadwal, JUMLAH_HARI_JADWAL);
                     sleepUniv(3);
                     printf("\n");
