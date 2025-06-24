@@ -1,91 +1,91 @@
 Tanggal;Hari;Shift;Nama Dokter
-1;Minggu;Pagi;Fatur, Chandra, Iman
-1;Minggu;Siang;Eko, Kadit
-1;Minggu;Malam;Ninis, Budi, Dewi
-2;Senin;Pagi;Fatur, Chandra, Iman
-2;Senin;Siang;Eko, Kadit
-2;Senin;Malam;Ninis, Budi, Dewi
-3;Selasa;Pagi;Fatur, Chandra, Iman
-3;Selasa;Siang;Eko, Kadit
-3;Selasa;Malam;Ninis, Budi, Dewi
-4;Rabu;Pagi;Fatur, Chandra, Iman
-4;Rabu;Siang;Eko, Kadit
-4;Rabu;Malam;Ninis, Budi, Ninis
-5;Kamis;Pagi;Fatur, Chandra, Iman
-5;Kamis;Siang;Eko, Kadit
-5;Kamis;Malam;Ninis, Dewi, Budi
-6;Jumat;Pagi;Fatur, Chandra, Iman
-6;Jumat;Siang;Iman, Eko, Kadit
-6;Jumat;Malam;Dewi, Ninis, Budi
-7;Sabtu;Pagi;Fatur, Fatur, Fatur
-7;Sabtu;Siang;Iman, Eko
-7;Sabtu;Malam;Dewi, Ninis, Budi
-8;Minggu;Pagi;Fatur, Chandra, Iman
-8;Minggu;Siang;Kadit, Eko
-8;Minggu;Malam;Ninis, Budi, Dewi
-9;Senin;Pagi;Fatur, Chandra, Iman
-9;Senin;Siang;Kadit, Eko
-9;Senin;Malam;Ninis, Budi, Dewi
-10;Selasa;Pagi;Fatur, Chandra, Iman
-10;Selasa;Siang;Kadit, Eko
-10;Selasa;Malam;Ninis, Budi, Dewi
-11;Rabu;Pagi;Fatur, Chandra, Iman
-11;Rabu;Siang;Kadit, Eko
-11;Rabu;Malam;Ninis, Budi, Ninis
-12;Kamis;Pagi;Fatur, Chandra, Iman
-12;Kamis;Siang;Kadit, Eko
-12;Kamis;Malam;Ninis, Dewi, Budi
-13;Jumat;Pagi;Fatur, Chandra, Iman
-13;Jumat;Siang;Kadit, Eko
-13;Jumat;Malam;Dewi, Budi, Ninis
-14;Sabtu;Pagi;Fatur, Iman, Fatur
-14;Sabtu;Siang;Kadit, Eko
-14;Sabtu;Malam;Dewi, Budi, Ninis
-15;Minggu;Pagi;Fatur, Chandra, Iman
-15;Minggu;Siang;Kadit, Eko
-15;Minggu;Malam;Ninis, Budi, Dewi
-16;Senin;Pagi;Fatur, Chandra, Iman
-16;Senin;Siang;Kadit, Eko
-16;Senin;Malam;Ninis, Budi, Dewi
-17;Selasa;Pagi;Fatur, Chandra, Iman
-17;Selasa;Siang;Kadit, Eko
-17;Selasa;Malam;Ninis, Budi, Dewi
-18;Rabu;Pagi;Fatur, Chandra, Iman
-18;Rabu;Siang;Kadit, Eko
-18;Rabu;Malam;Ninis, Budi, Dewi
-19;Kamis;Pagi;Fatur, Chandra, Iman
-19;Kamis;Siang;Kadit, Eko
-19;Kamis;Malam;Ninis, Budi, Dewi
-20;Jumat;Pagi;Fatur, Chandra, Iman
-20;Jumat;Siang;Ninis, Kadit
-20;Jumat;Malam;Budi, Dewi, Ninis
-21;Sabtu;Pagi;Fatur, Iman, Chandra
-21;Sabtu;Siang;Eko, Kadit
-21;Sabtu;Malam;Budi, Dewi, Ninis
-22;Minggu;Pagi;Fatur, Chandra, Iman
-22;Minggu;Siang;Eko, Kadit
-22;Minggu;Malam;Ninis, Budi, Dewi
-23;Senin;Pagi;Fatur, Chandra, Iman
-23;Senin;Siang;Eko, Kadit
-23;Senin;Malam;Ninis, Budi, Dewi
-24;Selasa;Pagi;Fatur, Chandra, Iman
-24;Selasa;Siang;Eko, Kadit
-24;Selasa;Malam;Ninis, Budi, Dewi
-25;Rabu;Pagi;Fatur, Chandra, Iman
-25;Rabu;Siang;Eko, Kadit
-25;Rabu;Malam;Ninis, Budi, Dewi
-26;Kamis;Pagi;Fatur, Chandra, Iman
-26;Kamis;Siang;Eko, Kadit
-26;Kamis;Malam;Ninis, Budi, Dewi
-27;Jumat;Pagi;Fatur, Chandra, Iman
-27;Jumat;Siang;Ninis, Eko, Kadit
-27;Jumat;Malam;Budi, Dewi, Ninis
-28;Sabtu;Pagi;Iman, Fatur, Chandra
-28;Sabtu;Siang;Eko, Kadit
-28;Sabtu;Malam;Budi, Dewi, Ninis
-29;Minggu;Pagi;Chandra, Iman
-29;Minggu;Siang;Eko, Kadit, Budi
-29;Minggu;Malam;Dewi, Ninis, Budi
-30;Senin;Pagi;Chandra, Eko
-30;Senin;Siang;Kadit, Dewi, Iman
-30;Senin;Malam;Ninis, Budi, Dewi
+1;Minggu;Pagi;Fatur, Chandra, Hana
+1;Minggu;Siang;Putri, Eko, Joko
+1;Minggu;Malam;falih, Lestari, Guntur
+2;Senin;Pagi;Fatur, Qomar, Chandra
+2;Senin;Siang;Putri, Eko, Joko
+2;Senin;Malam;falih, Malik, Lestari
+3;Selasa;Pagi;Fatur, Hana, Farah
+3;Selasa;Siang;Iqbal, Putri, Eko
+3;Selasa;Malam;Budi, Kartika, Otto
+4;Rabu;Pagi;Fatur, Sigit, Qomar
+4;Rabu;Siang;Joko, Iqbal, Putri
+4;Rabu;Malam;falih, Guntur, Malik
+5;Kamis;Pagi;Fatur, Chandra, Hana
+5;Kamis;Siang;Eko, Joko, Iqbal
+5;Kamis;Malam;Dewi, Lestari, Budi
+6;Jumat;Pagi;Nisa, Rina, Farah
+6;Jumat;Siang;Putri, Eko, Joko
+6;Jumat;Malam;Kartika, Otto, falih
+7;Sabtu;Pagi;Sigit, Qomar, Fatur
+7;Sabtu;Siang;Putri, Guntur, Malik
+7;Sabtu;Malam;Dewi, Lestari, Budi
+8;Minggu;Pagi;Fatur, Chandra, Hana
+8;Minggu;Siang;Putri, Eko, Joko
+8;Minggu;Malam;falih, Lestari, Guntur
+9;Senin;Pagi;Fatur, Qomar, Chandra
+9;Senin;Siang;Iqbal, Putri, Eko
+9;Senin;Malam;Malik, falih, Kartika
+10;Selasa;Pagi;Fatur, Farah, Hana
+10;Selasa;Siang;Joko, Iqbal, Putri
+10;Selasa;Malam;Otto, Budi, Lestari
+11;Rabu;Pagi;Sigit, Nisa, Rina
+11;Rabu;Siang;Eko, Joko, Iqbal
+11;Rabu;Malam;Dewi, Guntur, Malik
+12;Kamis;Pagi;Qomar, Fatur, Chandra
+12;Kamis;Siang;Putri, Eko, Joko
+12;Kamis;Malam;falih, Kartika, Otto
+13;Jumat;Pagi;Farah, Hana, Sigit
+13;Jumat;Siang;Putri, Eko, Joko
+13;Jumat;Malam;Budi, Lestari, Dewi
+14;Sabtu;Pagi;Nisa, Rina, Qomar
+14;Sabtu;Siang;Putri, Guntur, Malik
+14;Sabtu;Malam;falih, Kartika, Otto
+15;Minggu;Pagi;Fatur, Chandra, Hana
+15;Minggu;Siang;Eko, Iqbal, Joko
+15;Minggu;Malam;falih, Lestari, Guntur
+16;Senin;Pagi;Fatur, Farah, Qomar
+16;Senin;Siang;Putri, Eko, Iqbal
+16;Senin;Malam;Malik, Budi, Kartika
+17;Selasa;Pagi;Sigit, Chandra, Hana
+17;Selasa;Siang;Joko, Putri, Eko
+17;Selasa;Malam;Otto, falih, Dewi
+18;Rabu;Pagi;Nisa, Rina, Fatur
+18;Rabu;Siang;Iqbal, Joko, Putri
+18;Rabu;Malam;Lestari, Guntur, Malik
+19;Kamis;Pagi;Farah, Qomar, Sigit
+19;Kamis;Siang;Eko, Joko, Putri
+19;Kamis;Malam;Budi, Kartika, Otto
+20;Jumat;Pagi;Chandra, Hana, Nisa
+20;Jumat;Siang;Eko, Joko, Putri
+20;Jumat;Malam;falih, Dewi, Lestari
+21;Sabtu;Pagi;Rina, Fatur, Farah
+21;Sabtu;Siang;Putri, Guntur, Malik
+21;Sabtu;Malam;Budi, Kartika, Otto
+22;Minggu;Pagi;Fatur, Chandra, Hana
+22;Minggu;Siang;Iqbal, Eko, Joko
+22;Minggu;Malam;falih, Lestari, Guntur
+23;Senin;Pagi;Qomar, Sigit, Fatur
+23;Senin;Siang;Iqbal, Putri, Eko
+23;Senin;Malam;Malik, Budi, Dewi
+24;Selasa;Pagi;Farah, Nisa, Rina
+24;Selasa;Siang;Joko, Iqbal, Putri
+24;Selasa;Malam;Kartika, Otto, falih
+25;Rabu;Pagi;Chandra, Hana, Qomar
+25;Rabu;Siang;Eko, Joko, Putri
+25;Rabu;Malam;Lestari, Guntur, Malik
+26;Kamis;Pagi;Sigit, Fatur, Farah
+26;Kamis;Siang;Eko, Joko, Putri
+26;Kamis;Malam;Budi, Dewi, Kartika
+27;Jumat;Pagi;Nisa, Rina, Chandra
+27;Jumat;Siang;Eko, Joko, Hana
+27;Jumat;Malam;Otto, falih, Lestari
+28;Sabtu;Pagi;Qomar, Sigit, Fatur
+28;Sabtu;Siang;Putri, Farah, Guntur
+28;Sabtu;Malam;Malik, Budi, Dewi
+29;Minggu;Pagi;Fatur, Chandra, Hana
+29;Minggu;Siang;Iqbal, Eko, Joko
+29;Minggu;Malam;falih, Lestari, Guntur
+30;Senin;Pagi;Nisa, Qomar, Rina
+30;Senin;Siang;Iqbal, Putri, Eko
+30;Senin;Malam;Kartika, Malik, Otto

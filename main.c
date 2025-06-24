@@ -110,9 +110,9 @@ int main(int argc, char const *argv[])
         arrDokter = listToArray(&listDokter);
 
         // Inititae Array of DataDokter
-        jumlah_dokter = listDokter.size;
         clear_arrDataDokter(arrDataDokter);
         arrDataDokter = init_arrDataDokter(&listDokter);
+        jumlah_dokter = listDokter.size;
 
 		// UI MAIN
         printf("\n");
@@ -159,7 +159,7 @@ int main(int argc, char const *argv[])
 			}
 		} else if (choice == 2){ // Lihat Jadwal
             // Run Jadwal
-            if (listDokter.size < NDktrperShift * JUMLAH_SHIFT_PER_HARI) {
+            if (jumlah_dokter < NDktrperShift * JUMLAH_SHIFT_PER_HARI) {
                 printf("Doktor yang ada kurang! Ada %d, butunya %d\n", 
                     listDokter.size, NDktrperShift * JUMLAH_SHIFT_PER_HARI);
                 sleepUniv(1);
