@@ -1,3 +1,12 @@
+// BY KELOOMPOK 6 K03:
+// 13223081 - Kaditya Rakan Pandyasa 
+// 13223095 - Muhammad Falih Rosyidi
+// 13223112 - Ahmad Fatur Rohman
+// 13223118 - Saputra Yudika Marpaung
+// 13221082 - Abbel Jatmiko
+
+
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
